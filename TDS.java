@@ -355,7 +355,7 @@ public class TDS {
         System.out.println("#################################################################################");
     }
 
-    public static void extractSecretImage(File stegoCover, int size) {
+    public static void extractSecretImage(File stegoCover, int size, String extractionPath) {
 
         // SECRET IMAGE
         addSeparator();
@@ -415,7 +415,7 @@ public class TDS {
 
                 try {
                     ImageIO.write(bufferedSecretImg, "png",
-                            new File("extracted-assets/secret-reg-" + reg + "-seg-" + seg + ".png"));
+                            new File(extractionPath+"/secret-reg-" + reg + "-seg-" + seg + ".png"));
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -423,17 +423,6 @@ public class TDS {
 
             }
         }
-        //
-
-        // // getting the bufferd image from color array
-        // bufferedCoverImage = ImgOperation.getImageFromColorArray(colorArrCover);
-        // // Saving the modified image
-        // try {
-        //     ImageIO.write(bufferedCoverImage, "png", stegoCover);
-        // } catch (IOException e) {
-        //     // TODO Auto-generated catch block
-        //     e.printStackTrace();
-        // }
         System.out.println("Extracted all secret images successfully...");
 
     }
