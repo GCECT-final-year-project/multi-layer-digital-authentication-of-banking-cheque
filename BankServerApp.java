@@ -4,6 +4,9 @@ import java.nio.file.Path;
 
 public class BankServerApp {
     public static void main(String[] args) {
+
+        
+
         
 
         // fingerprint file
