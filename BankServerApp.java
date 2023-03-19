@@ -11,6 +11,8 @@ public class BankServerApp {
         String chedueDataPath = "server-assets/cheque-data";
         TextOnImage.readTextDataFromCover(stegoCover, sectionCoordinatesText, chedueDataPath);
 
+        
+
         // fingerprint file
         int size=32;
     
