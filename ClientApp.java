@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 
 public class ClientApp{
@@ -28,6 +29,15 @@ public class ClientApp{
 
         //hiding the fingerprint file as a secret inside the cover image file using transform domain steganography
         TDS.hideSecretImage(coverOutImg, tPrint, stegoCover);
+
+
+        DigitalSignature.generateSignature("client-assets/dig-sign");
+        try {
+            ImgOperation.embedSignatureInImage("client-assets/dig-sign/digital-sign.txt", "client-assets/stego-output/stego-cover.png", "client-assets/stego-output/sign-embedded-stego-cover.png");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
    
 
