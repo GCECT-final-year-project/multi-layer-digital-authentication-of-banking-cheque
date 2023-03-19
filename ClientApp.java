@@ -35,7 +35,6 @@ public class ClientApp{
         try {
             ImgOperation.embedSignatureInImage("client-assets/dig-sign/digital-sign.txt", "client-assets/stego-output/stego-cover.png", "client-assets/stego-output/sign-embedded-stego-cover.png");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

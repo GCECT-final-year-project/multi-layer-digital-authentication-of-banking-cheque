@@ -10,7 +10,7 @@ public class BankServerApp {
         int size=32;
     
         //Output File
-        File stegoCover = new File("server-assets/stego-cover/stego-cover.png");
+        File stegoCover = new File("server-assets/stego-cover/sign-embedded-stego-cover.png");
 
 
         String extractionPath = "server-assets/extracted-fPrints";

@@ -11,7 +11,6 @@ import java.util.Map;
 import java.awt.Graphics;
 import java.awt.font.TextAttribute;
 
-
 public class ImgOperation {
 
     // getting color array from image -> [y][x][0/1/2] -> r/g/b
@@ -252,130 +251,137 @@ public class ImgOperation {
 
         return fragment;
     }
+
     public static void writeTextOnImage(File coverImg,
-    HashMap<String, HashMap<String, HashMap<String, Integer>>> sectionCoordinates,
-    HashMap<String, String> chequeData, File coverOutImg) {
+            HashMap<String, HashMap<String, HashMap<String, Integer>>> sectionCoordinates,
+            HashMap<String, String> chequeData, File coverOutImg) {
 
-BufferedImage bufferedCoverImg = null;
-try {
-    bufferedCoverImg = ImageIO.read(coverImg);
-} catch (IOException e) {
-    e.printStackTrace();
-}
-
-Graphics g = bufferedCoverImg.getGraphics();
-g.setFont(g.getFont().deriveFont(30f));
-g.setColor(new Color(10, 10, 10));
-Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
-// adding space bettween letters as an text attribute
-attributes.put(TextAttribute.TRACKING, 0.25);
-g.setFont(g.getFont().deriveFont(attributes));
-
-for (String key : chequeData.keySet()) {
-    g.drawString(chequeData.get(key),
-            sectionCoordinates.get(key).get("start").get("x") + 5,
-            sectionCoordinates.get(key).get("start").get("y") + 20);
-}
-
-g.dispose();
-try {
-    ImageIO.write(bufferedCoverImg, "png", coverOutImg);
-} catch (IOException e) {
-    e.printStackTrace();
-}
-
-}
-
-
-
-public static void embedSignatureInImage(String signPath, String coverImagePath, String outputPath) throws IOException {
-
-
-    File sign = new File(signPath);
-    // Creating an object of FileInputStream to
-    // read from a file
-    FileInputStream fl = new FileInputStream(sign);
-
-    // Now creating byte array of same length as file
-    byte[] arr = new byte[(int) sign.length()];
-
-    // Reading file content to byte array
-    // using standard read() method
-    fl.read(arr);
-
-    // lastly closing an instance of file input stream
-    // to avoid memory leakage
-    fl.close();
-    //System.out.println(arr.length);
-    /// System.out.println(Arrays.toString(arr));
-
-    embed(arr, new File(coverImagePath), outputPath);
-}
-
-// embedding sign file bytes
-public static void embed(byte[] signBytes, File image, String outputPath) throws IOException {
-    BufferedImage img = ImageIO.read(image);
-    int width = img.getWidth();
-    int height = img.getHeight();
-    // storing the image coordinates for getting the segmented coordinates
-    int[] imgCoordinates = { 0, 0, width - 1, height - 1 };
-
-    // storing segmented coordinates in segmentedImgCoordinateMap : using methods
-    // from GenerateCoordinates class
-    HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> segmentedImgCoordinateMap = getCoordinatesFromCoverImg(imgCoordinates);
-
-    int xs = segmentedImgCoordinateMap.get("region-4").get("segment-2").get("start").get("x");
-    int ys = segmentedImgCoordinateMap.get("region-4").get("segment-2").get("start").get("y");
-    int xe = segmentedImgCoordinateMap.get("region-4").get("segment-3").get("end").get("x");
-    int ye = segmentedImgCoordinateMap.get("region-4").get("segment-3").get("end").get("y");
-
-    int c = 0;
-
-    boolean embedded = false;
-    int cur = 0;
-    int xOffset = 30;
-    int yOffset = 20;
-
-    for (int y = ys+yOffset; y < ye-yOffset && !embedded; y++) {
-        for (int x = xs+xOffset; x < xe-xOffset && !embedded; x++) {
-            // Retrieving contents of a pixel
-            int pixel = img.getRGB(x, y);
-            // Creating a Color object from pixel value
-            Color color = new Color(pixel, true);
-            // Retrieving the R G B values
-            int red = color.getRed();
-            int green = color.getGreen();
-            int blue = color.getBlue();
-            // Modifying the RGB values
-            // embedding the RGB values
-            // if (cur < 255) {
-            // red = signBytes[cur++] + 128;
-            // green = signBytes[cur++] + 128;
-            // blue = signBytes[cur++] + 128;
-            // } else {
-            // red = signBytes[cur++] + 128;
-            // }
-            red = signBytes[cur++] + 128;
-            // green = signBytes[cur++] + 128;
-            blue = signBytes[cur++] + 128;
-            if (cur == signBytes.length) {
-                // embedded = true;
-                // System.out.println("embedded");
-                c++;
-                cur = 0;
-            }
-            // Creating new Color object
-            color = new Color(red, green, blue);
-            // Setting new Color object to the image
-            img.setRGB(x, y, color.getRGB());
+        BufferedImage bufferedCoverImg = null;
+        try {
+            bufferedCoverImg = ImageIO.read(coverImg);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }
-    // Saving the modified image
-    File file = new File(outputPath);
-    ImageIO.write(img, "png", file);
-    System.out.println("Embedding signature in Image done... " + c+" times...");
-    
-}
 
+        Graphics g = bufferedCoverImg.getGraphics();
+        g.setFont(g.getFont().deriveFont(30f));
+        g.setColor(new Color(10, 10, 10));
+        Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>();
+        // adding space bettween letters as an text attribute
+        attributes.put(TextAttribute.TRACKING, 0.25);
+        g.setFont(g.getFont().deriveFont(attributes));
+        int xOffset = 5;
+        int yOffset = 20;
+
+        for (String key : chequeData.keySet()) {
+            if(key.equals("cheque") || key.equals("amount")){
+                yOffset=30;
+            }
+            else{
+                yOffset=20;
+            }
+            g.drawString(chequeData.get(key),
+                    sectionCoordinates.get(key).get("start").get("x") + xOffset,
+                    sectionCoordinates.get(key).get("start").get("y") + yOffset);
+        }
+
+        g.dispose();
+        try {
+            ImageIO.write(bufferedCoverImg, "png", coverOutImg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void embedSignatureInImage(String signPath, String coverImagePath, String outputPath)
+            throws IOException {
+
+        File sign = new File(signPath);
+        // Creating an object of FileInputStream to
+        // read from a file
+        FileInputStream fl = new FileInputStream(sign);
+
+        // Now creating byte array of same length as file
+        byte[] arr = new byte[(int) sign.length()];
+
+        // Reading file content to byte array
+        // using standard read() method
+        fl.read(arr);
+
+        // lastly closing an instance of file input stream
+        // to avoid memory leakage
+        fl.close();
+        // System.out.println(arr.length);
+        /// System.out.println(Arrays.toString(arr));
+
+        embed(arr, new File(coverImagePath), outputPath);
+    }
+
+    // embedding sign file bytes
+    public static void embed(byte[] signBytes, File image, String outputPath) throws IOException {
+        BufferedImage img = ImageIO.read(image);
+        int width = img.getWidth();
+        int height = img.getHeight();
+        // storing the image coordinates for getting the segmented coordinates
+        int[] imgCoordinates = { 0, 0, width - 1, height - 1 };
+
+        // storing segmented coordinates in segmentedImgCoordinateMap : using methods
+        // from GenerateCoordinates class
+        HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> segmentedImgCoordinateMap = getCoordinatesFromCoverImg(
+                imgCoordinates);
+
+        int xs = segmentedImgCoordinateMap.get("region-4").get("segment-2").get("start").get("x");
+        int ys = segmentedImgCoordinateMap.get("region-4").get("segment-2").get("start").get("y");
+        int xe = segmentedImgCoordinateMap.get("region-4").get("segment-3").get("end").get("x");
+        int ye = segmentedImgCoordinateMap.get("region-4").get("segment-3").get("end").get("y");
+
+        int c = 0;
+
+        boolean embedded = false;
+        int cur = 0;
+        int xOffset = 30;
+        int yOffset = 20;
+
+        for (int y = ys + yOffset; y < ye - yOffset && !embedded; y++) {
+            for (int x = xs + xOffset; x < xe - xOffset && !embedded; x++) {
+                // Retrieving contents of a pixel
+                int pixel = img.getRGB(x, y);
+                // Creating a Color object from pixel value
+                Color color = new Color(pixel, true);
+                // Retrieving the R G B values
+                int red = color.getRed();
+                int green = color.getGreen();
+                int blue = color.getBlue();
+                // Modifying the RGB values
+                // embedding the RGB values
+                // if (cur < 255) {
+                // red = signBytes[cur++] + 128;
+                // green = signBytes[cur++] + 128;
+                // blue = signBytes[cur++] + 128;
+                // } else {
+                // red = signBytes[cur++] + 128;
+                // }
+                red = signBytes[cur++] + 128;
+                // green = signBytes[cur++] + 128;
+                blue = signBytes[cur++] + 128;
+                if (cur == signBytes.length) {
+                    // embedded = true;
+                    // System.out.println("embedded");
+                    c++;
+                    cur = 0;
+                }
+                // Creating new Color object
+                color = new Color(red, green, blue);
+                // Setting new Color object to the image
+                img.setRGB(x, y, color.getRGB());
+            }
+        }
+        // Saving the modified image
+        File file = new File(outputPath);
+        ImageIO.write(img, "png", file);
+        System.out.println("Embedding signature in Image done... " + c + " times...");
+
+    }
 
 }

@@ -65,9 +65,9 @@ public class TDS {
 
         for (int reg = 1; reg <= 4; reg++) {
             for (int seg = 1; seg <= 4; seg++) {
-                System.out.println("region : " + reg + ", seg:" + seg);
+                //System.out.println("region : " + reg + ", seg:" + seg);
                 ArrayList<Integer[][]> pixelArr = getPixelArrayFromSegment(colorArrCover, coverCoordinates, reg, seg);
-                System.out.println(pixelArr.size());
+                //System.out.println(pixelArr.size());
 
                 int startingFragIndex = 2;
                 int matrixInterval = 2;
@@ -90,6 +90,7 @@ public class TDS {
             e.printStackTrace();
         }
         System.out.println("Image Steganography Done...");
+        addSeparator();
 
     }
 
@@ -401,9 +402,9 @@ public class TDS {
 
         for (int reg = 1; reg <= 4; reg++) {
             for (int seg = 1; seg <= 4; seg++) {
-                System.out.println("region : " + reg + ", seg:" + seg);
+                //System.out.println("region : " + reg + ", seg:" + seg);
                 ArrayList<Integer[][]> pixelArr = getPixelArrayFromSegment(colorArrCover, coverCoordinates, reg, seg);
-                System.out.println(pixelArr.size());
+                //System.out.println(pixelArr.size());
 
                 int startingFragIndex = 2;
                 int matrixInterval = 2;
