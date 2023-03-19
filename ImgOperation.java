@@ -1,6 +1,7 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -274,11 +275,10 @@ public class ImgOperation {
         int yOffset = 20;
 
         for (String key : chequeData.keySet()) {
-            if(key.equals("cheque") || key.equals("amount")){
-                yOffset=30;
-            }
-            else{
-                yOffset=20;
+            if (key.equals("cheque") || key.equals("amount")) {
+                yOffset = 30;
+            } else {
+                yOffset = 20;
             }
             g.drawString(chequeData.get(key),
                     sectionCoordinates.get(key).get("start").get("x") + xOffset,
@@ -353,15 +353,7 @@ public class ImgOperation {
                 int red = color.getRed();
                 int green = color.getGreen();
                 int blue = color.getBlue();
-                // Modifying the RGB values
-                // embedding the RGB values
-                // if (cur < 255) {
-                // red = signBytes[cur++] + 128;
-                // green = signBytes[cur++] + 128;
-                // blue = signBytes[cur++] + 128;
-                // } else {
-                // red = signBytes[cur++] + 128;
-                // }
+               
                 red = signBytes[cur++] + 128;
                 // green = signBytes[cur++] + 128;
                 blue = signBytes[cur++] + 128;
@@ -382,6 +374,63 @@ public class ImgOperation {
         ImageIO.write(img, "png", file);
         System.out.println("Embedding signature in Image done... " + c + " times...");
 
+    }
+
+    public static void readTextFromImage(File stegoCover,
+            HashMap<String, HashMap<String, HashMap<String, Integer>>> sectionCoordinates, String chequeDataPath) throws IOException {
+        HashMap<String, String> chequeData = new HashMap<String, String>();
+        BufferedImage bufferedCoverImg = null;
+        try {
+            bufferedCoverImg = ImageIO.read(stegoCover);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (String key : sectionCoordinates.keySet()) {
+            int xs = sectionCoordinates.get(key).get("start").get("x");
+            int ys = sectionCoordinates.get(key).get("start").get("y");
+            int xe = sectionCoordinates.get(key).get("end").get("x") + 5;
+            int ye = sectionCoordinates.get(key).get("end").get("y") + 5;
+            if (key.equals("date") || key.equals("name")) {
+                //xs -=   10;
+                ys -=  5;
+            } 
+
+            BufferedImage subImg = bufferedCoverImg.getSubimage(xs, ys, xe - xs, ye - ys);
+
+            try {
+                ImageIO.write(subImg, "png", new File(chequeDataPath+"/" + key + ".png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            String extractedText = OCR.performOCR(new File(chequeDataPath+"/" + key + ".png")).trim();
+
+            chequeData.put(key, extractedText);
+            //System.out.println(key + " : " + extractedText);
+
+        }
+        String chequeDataText ="";
+        chequeDataText+="name-"+chequeData.get("name")+System.lineSeparator()+
+        "amount-"+chequeData.get("amount")+System.lineSeparator()+
+        "date-"+chequeData.get("date")+System.lineSeparator()+
+        "cheque-"+chequeData.get("cheque").substring(0, 6)+" "+
+        chequeData.get("cheque").substring(6, 15   )+" "+
+        chequeData.get("cheque").substring(15, 21  )+" "+
+        chequeData.get("cheque").substring(21, 23  );
+        System.out.println("extracted text data : "+System.lineSeparator()+ chequeDataText);
+
+
+         //passing file instance in filewriter
+         FileWriter wr = new FileWriter(new File(chequeDataPath+"/extracted-cheque-data.txt"));
+ 
+         //calling writer.write() method with the string
+         wr.write(chequeDataText);
+          
+         //flushing the writer
+         wr.flush();
+          
+         //closing the writer
+         wr.close();
     }
 
 }

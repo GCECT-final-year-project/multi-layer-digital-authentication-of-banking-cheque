@@ -14,7 +14,7 @@ public class ClientApp{
 
         File coverOutImg = new File("client-assets/cover-img/hdfc-cover.png");
 
-        PrepareCover.writeChequeDataOnCover(coverImg, sectionCoordinatesText, chequeDataText,coverOutImg);
+        TextOnImage.writeChequeDataOnCover(coverImg, sectionCoordinatesText, chequeDataText,coverOutImg);
 
 
 

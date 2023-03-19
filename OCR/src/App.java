@@ -19,7 +19,7 @@ public class App {
             tess.setDatapath("OCR/src/tessdata");
             tess.setLanguage("eng");
             String text = tess.doOCR(image);
-            System.out.println(text);
+            //System.out.println(text);
             return text;
         }catch(Exception e){
             e.printStackTrace();
