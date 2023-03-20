@@ -1,13 +1,20 @@
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import javax.crypto.Cipher;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 
+import javax.crypto.Cipher;
+import javax.imageio.ImageIO;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -123,5 +130,75 @@ public class DigitalSignature {
  
         return hexString.toString();
     }
+    public static void verifySignature(String digSignPath, String chequeDataPath) {
+        try {
+            byte[] bytes = Files.readAllBytes(Paths.get(digSignPath+"/key/publicKey.pub"));
+            X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            PublicKey pub = kf.generatePublic(ks);
+
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+            cipher.init(Cipher.DECRYPT_MODE, pub);
+            //server-assets\dig-sign\extarcted-digital-sign.txt
+            try (FileInputStream in = new FileInputStream(digSignPath+"/extracted-digital-sign.txt");
+            //server-assets\dig-sign\verfication
+                    FileOutputStream out = new FileOutputStream(digSignPath+
+                            "/verification/decrypted-dig-sign.txt")) {
+                processFile(cipher, in, out);
+
+                String inputPath = chequeDataPath+"/extracted-cheque-data.txt";
+                String outputPath = digSignPath+"/verification/hashed-recieved-input.txt";
+                generateHash(inputPath, outputPath);
+
+                int res = matchFiles(digSignPath);
+                String verificationResult = "Signature verification falied..!";
+                if (res == -1) {
+                    verificationResult = "Signature verified...!";
+                    System.out.println(verificationResult);
+
+                }
+
+                Files.write(Paths.get(digSignPath+"/verification/verification-result.txt"),
+                        verificationResult.getBytes());
+
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println(e);
+        }
+    }
+
+
+    static int matchFiles(String digSignPath) throws IOException {
+        boolean isMatching = false;
+        Path digSign = Paths.get(digSignPath+"/verification/decrypted-dig-sign.txt");
+        Path hashedinput = Paths.get(digSignPath+"/verification/hashed-recieved-input.txt");
+        // File inputFile = new
+        // File("digital-sign-with-rsa-sha256/Verification/decrypted-dig-sign.txt");
+        // File outputFile = new
+        // File("digital-sign-with-rsa-sha256/Verification/decrypted-dig-sign.txt");
+
+        try (BufferedReader bf1 = Files.newBufferedReader(digSign);
+                BufferedReader bf2 = Files.newBufferedReader(hashedinput)) {
+
+            int lineNumber = 1;
+            String line1 = "", line2 = "";
+            while ((line1 = bf1.readLine()) != null) {
+                line2 = bf2.readLine();
+                if (line2 == null || !line1.equals(line2)) {
+                    return lineNumber;
+                }
+                lineNumber++;
+            }
+            if (bf2.readLine() == null) {
+                return -1;
+            } else {
+                return lineNumber;
+            }
+        }
+    }
+   
+
 
 }

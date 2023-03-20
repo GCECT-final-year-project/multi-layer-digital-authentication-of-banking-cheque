@@ -11,3 +11,4 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 client-assets/stego-output/*.png
 server-assets/extracted-fPrints/*.png
+server-assets/dig-sign/extracted-digital-sign.txt

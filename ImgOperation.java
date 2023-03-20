@@ -1,8 +1,10 @@
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -432,5 +434,99 @@ public class ImgOperation {
          //closing the writer
          wr.close();
     }
+
+    public static void extractSignatureFromImage(String coverPath, String extractionPath, int hideCount) throws IOException {
+        byte[] signBytes = extract(new File(coverPath), hideCount);
+        // System.out.println(Arrays.toString(extract(new
+        // File("SignEmbedding/embedded-cover.png"))));
+        //System.out.println(Arrays.toString(signBytes));
+
+        File file = new File(extractionPath);
+        OutputStream os = new FileOutputStream(file);
+
+        // Starting writing the bytes in it
+        os.write(signBytes);
+
+        os.close();
+    }
+
+    public static byte[] extract(File image, int hideCount) throws IOException {
+        BufferedImage img = ImageIO.read(image);
+        int width = img.getWidth();
+        int height = img.getHeight();
+
+       
+        // storing the image coordinates for getting the segmented coordinates
+        int[] imgCoordinates = { 0, 0, width - 1, height - 1 };
+
+        // storing segmented coordinates in segmentedImgCoordinateMap : using methods
+        // from GenerateCoordinates class
+        HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> segmentedImgCoordinateMap = getCoordinatesFromCoverImg(
+                imgCoordinates);
+
+        int xs = segmentedImgCoordinateMap.get("region-4").get("segment-2").get("start").get("x");
+        int ys = segmentedImgCoordinateMap.get("region-4").get("segment-2").get("start").get("y");
+        int xe = segmentedImgCoordinateMap.get("region-4").get("segment-3").get("end").get("x");
+        int ye = segmentedImgCoordinateMap.get("region-4").get("segment-3").get("end").get("y");
+        int[] pixels = new int[width * height];
+
+        byte[] signBytes = new byte[256];
+
+        
+        int c = hideCount;
+        int[] sumArr = new int[256];
+
+        boolean extracted = false;
+        int cur = 0;
+
+      
+        int xOffset = 30;
+        int yOffset = 20;
+
+        for (int y = ys + yOffset; y < ye - yOffset && !extracted; y++) {
+            for (int x = xs + xOffset; x < xe - xOffset && !extracted; x++) {
+                // Retrieving contents of a pixel
+                int pixel = img.getRGB(x, y);
+                // Creating a Color object from pixel value
+                Color color = new Color(pixel, true);
+                // Retrieving the R G B values
+                int red = color.getRed();
+                int green = color.getGreen();
+                int blue = color.getBlue();
+                // Modifying the RGB values
+
+                // red = signBytes[cur++] + 128;
+                // // green = signBytes[cur++] + 128;
+                // blue = signBytes[cur++] + 128;
+
+                sumArr[cur++] += red - 128;
+                sumArr[cur++] += blue - 128;
+
+                if (cur == 256) {
+                    // extracted = true;
+                    
+                    c--;
+                    cur = 0;
+                    if (c == 0) {
+                        extracted = true;
+                    }
+                }
+            }
+        }
+        // Saving the modified image
+        System.out.println("signatyre extracted successfully..." + hideCount + " times...");
+        //System.out.println(c);
+        //System.out.println(Arrays.toString(sumArr));
+
+        for (int i = 0; i < signBytes.length; i++) {
+
+            signBytes[i] = (byte) (sumArr[i] / hideCount);
+            // System.out.println(sumArr[i] / 256);
+        }
+        return signBytes;
+
+    }
+
+    
 
 }

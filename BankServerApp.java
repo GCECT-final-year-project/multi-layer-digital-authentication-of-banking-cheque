@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 
 
@@ -11,8 +12,15 @@ public class BankServerApp {
         String chedueDataPath = "server-assets/cheque-data";
         TextOnImage.readTextDataFromCover(stegoCover, sectionCoordinatesText, chedueDataPath);
 
-        
 
+        try {
+            ImgOperation.extractSignatureFromImage("server-assets/stego-cover/sign-embedded-stego-cover.png", "server-assets/dig-sign/extracted-digital-sign.txt",250);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        DigitalSignature.verifySignature("server-assets/dig-sign", chedueDataPath);
         // fingerprint file
         int size=32;
     
@@ -21,7 +29,7 @@ public class BankServerApp {
 
         String extractionPath = "server-assets/extracted-fPrints";
         //extracting the fingerprint from the stego image file using transform domain steganography
-        //TDS.extractSecretImage(stegoCover, size, extractionPath);
+        TDS.extractSecretImage(stegoCover, size, extractionPath);
 
 
     }
