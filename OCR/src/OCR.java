@@ -1,10 +1,8 @@
-import net.sourceforge.*;
+
 import net.sourceforge.tess4j.Tesseract;
 
 import java.io.*;
-import javax.imageio.*;
-import java.awt.image.*;
-import java.awt.*;
+
 
 
 public class OCR {

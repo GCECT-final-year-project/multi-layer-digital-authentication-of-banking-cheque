@@ -4,6 +4,9 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 public class ClientApp{
+    static int matrixInterval = 1;
+    static int secretImgSize = 56;
+    static int startingFragIndex=2;
     public static void main(String[] args) {
         // cover image file
         File coverImg = new File("client-assets/cover-img/hdfc.png");
@@ -21,7 +24,7 @@ public class ClientApp{
 
 
         // // fingerprint file
-        int size=32;
+        int size=ClientApp.secretImgSize;
         File tPrint = new File("client-assets/secret-images/thumb-"+size+"x"+size+".png");
 
 

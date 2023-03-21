@@ -69,8 +69,8 @@ public class TDS {
                 ArrayList<Integer[][]> pixelArr = getPixelArrayFromSegment(colorArrCover, coverCoordinates, reg, seg);
                 //System.out.println(pixelArr.size());
 
-                int startingFragIndex = 2;
-                int matrixInterval = 2;
+                int startingFragIndex = ClientApp.startingFragIndex;
+                int matrixInterval = ClientApp.matrixInterval;
 
                 hideBitArrInPixelArr(pixelArr, bitArrSecretImg, segmentsScrtImg, startingFragIndex, matrixInterval);
 
@@ -406,8 +406,8 @@ public class TDS {
                 ArrayList<Integer[][]> pixelArr = getPixelArrayFromSegment(colorArrCover, coverCoordinates, reg, seg);
                 //System.out.println(pixelArr.size());
 
-                int startingFragIndex = 2;
-                int matrixInterval = 2;
+                int startingFragIndex = BankServerApp.startingFragIndex;
+                int matrixInterval = BankServerApp.matrixInterval;
 
                 extractBitArrFromPixelArray(pixelArr, bitArrSecretImg, segmentsScrtImg, startingFragIndex,
                         matrixInterval);
