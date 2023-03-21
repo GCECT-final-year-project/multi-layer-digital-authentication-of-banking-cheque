@@ -1,4 +1,0 @@
-name-Sathi Roy
-amount-10000
-date-20032023
-cheque-123456 123456789 123456 12

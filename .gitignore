@@ -12,3 +12,6 @@ buildNumber.properties
 client-assets/stego-output/*.png
 server-assets/extracted-fPrints/*.png
 server-assets/dig-sign/extracted-digital-sign.txt
+server-assets/**/*.png
+server-assets/**/*.txt
+server-assets/**/*.pub
