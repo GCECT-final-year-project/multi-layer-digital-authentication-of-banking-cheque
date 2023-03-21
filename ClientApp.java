@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 public class ClientApp{
@@ -8,9 +9,10 @@ public class ClientApp{
         File coverImg = new File("client-assets/cover-img/hdfc.png");
 
 
-        Path sectionCoordinatesText = Path.of("client-assets/cover-img/cheque-section-coordinates.txt");
-        Path chequeDataText = Path.of("client-assets/input-text/cheque-data.txt");
-
+       // Path sectionCoordinatesText = Path.of("client-assets/cover-img/cheque-section-coordinates.txt");
+        Path sectionCoordinatesText = FileSystems.getDefault().getPath("client-assets/cover-img/cheque-section-coordinates.txt");
+        Path chequeDataText = FileSystems.getDefault().getPath("client-assets/input-text/cheque-data.txt");
+    
 
         File coverOutImg = new File("client-assets/cover-img/hdfc-cover.png");
 
@@ -18,7 +20,7 @@ public class ClientApp{
 
 
 
-        // fingerprint file
+        // // fingerprint file
         int size=32;
         File tPrint = new File("client-assets/secret-images/thumb-"+size+"x"+size+".png");
 
@@ -31,10 +33,17 @@ public class ClientApp{
         TDS.hideSecretImage(coverOutImg, tPrint, stegoCover);
 
 
-        DigitalSignature.generateSignature("client-assets/dig-sign");
+        DigitalSignature.generateSignature("client-assets/dig-sign", "client-assets/input-text/cheque-data.txt");
         try {
             ImgOperation.embedSignatureInImage("client-assets/dig-sign/digital-sign.txt", "client-assets/stego-output/stego-cover.png", "client-assets/stego-output/sign-embedded-stego-cover.png");
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            TransferData.sendToServer("client-assets", "server-assets");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

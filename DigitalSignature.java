@@ -31,7 +31,7 @@ public class DigitalSignature {
 
 
 
-    public static void generateSignature(String signPath) {
+    public static void generateSignature(String signPath, String inputDataPath) {
         try {
             byte[] bytes = Files.readAllBytes(Paths.get(signPath+"/keys/privateKey.key"));
             PKCS8EncodedKeySpec ks = new PKCS8EncodedKeySpec(bytes);
@@ -42,7 +42,7 @@ public class DigitalSignature {
             cipher.init(Cipher.ENCRYPT_MODE, pvt);
 
 
-            String inputPath = signPath+"/cheque-data.txt";
+            String inputPath = inputDataPath;
             String outputPath = signPath+"/hashed-cheque-data.txt";
             generateHash(inputPath, outputPath);
 

@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 
@@ -8,7 +9,7 @@ public class BankServerApp {
          //Stego iamge
          File stegoCover = new File("server-assets/stego-cover/sign-embedded-stego-cover.png");
 
-        Path sectionCoordinatesText = Path.of("server-assets/stego-cover/cheque-section-coordinates.txt");
+        Path sectionCoordinatesText = FileSystems.getDefault().getPath("server-assets/stego-cover/cheque-section-coordinates.txt");
         String chedueDataPath = "server-assets/cheque-data";
         TextOnImage.readTextDataFromCover(stegoCover, sectionCoordinatesText, chedueDataPath);
 

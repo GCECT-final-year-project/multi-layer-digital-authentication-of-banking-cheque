@@ -1,12 +1,5 @@
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.*;
 import java.util.HashMap;
 import java.awt.Color;
 import javax.imageio.ImageIO;
