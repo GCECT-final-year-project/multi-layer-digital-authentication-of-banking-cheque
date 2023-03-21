@@ -37,7 +37,7 @@ public class BankServerApp {
         TDS.extractSecretImage(stegoCover, size, extractionPath);
 
         //fingerprint image matching
-
+        
 
     }
 }
