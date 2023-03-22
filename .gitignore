@@ -18,3 +18,8 @@ client-assets/cover-img/hdfc-cover.png
 client-assets/dig-sign/*.txt
 server-assets/stego-cover/*.png
 server-assets/stego-cover/*.txt
+server-assets/dig-sign/**/*.png
+server-assets/dig-sign/**/*.txt
+server-assets/dig-sign/**/*.pub
+server-assets/image-comparision/*.txt
+server-assets/image-comparision/*.png
