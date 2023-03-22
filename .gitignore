@@ -14,9 +14,7 @@ server-assets/extracted-fPrints/*.png
 server-assets/dig-sign/extracted-digital-sign.txt
 server-assets/cheque-data/*.txt
 server-assets/cheque-data/*.png
-server-assets/**/*.png
-server-assets/**/*.txt
-server-assets/**/*.pub
 client-assets/cover-img/hdfc-cover.png
 client-assets/dig-sign/*.txt
-
+server-assets/stego-cover/*.png
+server-assets/stego-cover/*.txt
