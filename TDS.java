@@ -16,7 +16,7 @@ public class TDS {
     public static void hideSecretImage(File coverImage, File fPrint, File stegoCover) {
 
         // SECRET IMAGE
-        addSeparator();
+        ConsoleOutput.printSeparator(50);
         System.out.println("FIGERPRINT IMAGE");
         BufferedImage bufferedSecretImg = null;
         try {
@@ -36,7 +36,7 @@ public class TDS {
         HashMap<String, HashMap<String, HashMap<String, Integer>>> segmentsScrtImg = ImgOperation
                 .generateFragmentCoordinates(bufferedSecretImg);
         System.out.println(Arrays.asList(segmentsScrtImg));
-        addSeparator();
+        ConsoleOutput.printSeparator(50);
 
         // COVER IAMGE
         BufferedImage bufferedCoverImage = null;
@@ -57,7 +57,7 @@ public class TDS {
         Integer[][][] colorArrCover = ImgOperation.getColorArrayFromImage(bufferedCoverImage);
         // System.out.println(colorArrCover.length+" , "+colorArrCover[0].length);
 
-        addSeparator();
+        ConsoleOutput.printSeparator(50);
 
         System.out.println("TRANSFORM DOMAIN STEGANOGRAPHY");
         // PERFORMING STEGANOGRAPHY
@@ -90,7 +90,7 @@ public class TDS {
             e.printStackTrace();
         }
         System.out.println("Image Steganography Done...");
-        addSeparator();
+        ConsoleOutput.printSeparator(50);
 
     }
 
@@ -351,29 +351,26 @@ public class TDS {
         return pixelArr;
     }
 
-    // add separator in between console outputs
-    private static void addSeparator() {
-        System.out.println("#################################################################################");
-    }
+    
 
     public static void extractSecretImage(File stegoCover, int size, String extractionPath) {
 
         // SECRET IMAGE
-        addSeparator();
-        System.out.println("FIGERPRINT IMAGE");
-        System.out.println("width: " + size + ", height: " + size);
+        ConsoleOutput.printSeparator(50);
+        System.out.println("## FIGERPRINT IMAGE");
+        System.out.println("# Width: " + size + ", Height: " + size);
 
         BufferedImage bufferedSecretImg = new BufferedImage(size, size,
                 BufferedImage.TYPE_INT_RGB);
 
         boolean[][][][] bitArrSecretImg = new boolean[size][size][3][8];
-        System.out.println(bitArrSecretImg.length * bitArrSecretImg[0].length * 3 + " bytes");
+        System.out.println("# Total size : "+bitArrSecretImg.length * bitArrSecretImg[0].length * 3 + " bytes");
 
         // segmenting the secret image
         HashMap<String, HashMap<String, HashMap<String, Integer>>> segmentsScrtImg = ImgOperation
                 .generateFragmentCoordinates(bufferedSecretImg);
-        System.out.println(Arrays.asList(segmentsScrtImg));
-        addSeparator();
+        //System.out.println(Arrays.asList(segmentsScrtImg));
+        ConsoleOutput.printSeparator(50);
 
         // COVER IAMGE
         BufferedImage bufferedCoverImage = null;
@@ -386,17 +383,18 @@ public class TDS {
         int widthCover = bufferedCoverImage.getWidth();
         int heightCover = bufferedCoverImage.getHeight();
 
-        System.out.println("STEGO COVER IMAGE");
-        System.out.println("width: " + widthCover + ", height: " + heightCover);
+        System.out.println("## STEGO COVER IMAGE");
+        System.out.println("# Width: " + widthCover + ", Height: " + heightCover);
         HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> coverCoordinates = ImgOperation
                 .getCoordinatesFromCoverImg(new int[] { 0, 0, widthCover - 1, heightCover - 1 });
-        System.out.println(Arrays.asList(coverCoordinates));
+        System.out.println("# Total size : "+widthCover * widthCover * 3 + " bytes");
+        //System.out.println(Arrays.asList(coverCoordinates));
         Integer[][][] colorArrCover = ImgOperation.getColorArrayFromImage(bufferedCoverImage);
         // System.out.println(colorArrCover.length+" , "+colorArrCover[0].length);
 
-        addSeparator();
+        ConsoleOutput.printSeparator(50);
 
-        System.out.println("TRANSFORM DOMAIN STEGANOGRAPHY");
+        System.out.println("## EXTRACTING IMAGES...");
         // PERFORMING STEGANOGRAPHY (EXTRACTING)
         // colorArrCover --> bitArrSecretImg
 
@@ -424,7 +422,7 @@ public class TDS {
 
             }
         }
-        System.out.println("Extracted all secret images successfully...");
+        System.out.println("# all secret images extracted successfully...!");
 
     }
 

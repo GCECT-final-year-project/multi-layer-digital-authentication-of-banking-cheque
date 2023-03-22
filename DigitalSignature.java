@@ -120,7 +120,9 @@ public class DigitalSignature {
  
         return hexString.toString();
     }
-    public static void verifySignature(String digSignPath, String chequeDataPath) {
+    public static boolean verifySignature(String digSignPath, String chequeDataPath) {
+        boolean isMatching = false;
+        String verificationResult = "## DIGITAL SIGNATURE VERIFICATION RESULT : ";
         try {
             byte[] bytes = Files.readAllBytes(Paths.get(digSignPath+"/key/publicKey.pub"));
             X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
@@ -141,12 +143,16 @@ public class DigitalSignature {
                 generateHash(inputPath, outputPath);
 
                 int res = matchFiles(digSignPath);
-                String verificationResult = "Signature verification falied..!";
+                
                 if (res == -1) {
-                    verificationResult = "Signature verified...!";
-                    System.out.println(verificationResult);
-
+                    verificationResult += "VERIFICATION SUCCESSFUL...!";
+                    isMatching=true;
                 }
+                else{
+                    verificationResult += "VERIFICATION FAILED...!";
+                    isMatching=false;
+                }
+                System.out.println(verificationResult);
 
                 Files.write(Paths.get(digSignPath+"/verification/verification-result.txt"),
                         verificationResult.getBytes());
@@ -157,6 +163,7 @@ public class DigitalSignature {
             // TODO: handle exception
             System.out.println(e);
         }
+        return isMatching;
     }
 
 

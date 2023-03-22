@@ -241,8 +241,11 @@ public class ImageComparision {
         return percentage;
     }
 
-    public static void analyzeMatchResult(double[][][] fingerprintMatchResult, String string) {
-        StringBuffer resultString = new StringBuffer("## SECRET IMAGE COMPARION RESULT:" + System.lineSeparator());
+    public static boolean analyzeMatchResult(double[][][] fingerprintMatchResult, String analysisResultPath) {
+        StringBuffer resultString = new StringBuffer("## SECRET IMAGE COMPARISION RESULT:" + System.lineSeparator());
+        String cross = "!";
+        String tick = ">";
+        boolean success = true;
         ArrayList<ArrayList<Integer>> mismatchAreas = new ArrayList<>();
         for (int i = 0; i < fingerprintMatchResult.length; i++) {
             for (int j = 0; j < fingerprintMatchResult[i].length; j++) {
@@ -253,29 +256,39 @@ public class ImageComparision {
                     continue;
                 }
                 boolean result = false;
+                String resSign;
 
                 if (fingerprintMatchResult[i][j][0] < 99.90 || fingerprintMatchResult[i][j][1] < 97.0) {
                     result = false;
                     mismatchAreas.add(new ArrayList<>(Arrays.asList(i + 1, j + 1)));
+                    resSign = cross;
                 } else {
                     result = true;
+                    resSign = tick;
                 }
-                resultString.append("   Region-" + (i + 1) + "-Segment-" + (j + 1) + ": Matched ? " + result + " || "
-                        + " Matching(Color, Pixel) Percentage : " + fingerprintMatchResult[i][j][0]
-                        + " ," + fingerprintMatchResult[i][j][1]
-                        + System.lineSeparator());
+                // String.format("%.0f", 1654621658874684.0d)
+                resultString.append(
+                        resSign + "   Region-" + (i + 1) + "-Segment-" + (j + 1) + ": Matched ? " + result + " || "
+                                + " Matching(Color, Pixel) Percentage : "
+                                + String.format("%.3f", fingerprintMatchResult[i][j][0])
+                                + "% , " + String.format("%.3f", fingerprintMatchResult[i][j][1]) + "%"
+                                + System.lineSeparator());
 
             }
         }
         if (mismatchAreas.size() > 0) {
+            success = false;
             resultString.append("## SECRET IMAGE COMPARION RESULT: MISMATCHED AT " + mismatchAreas.size()
-                    + " SEGMENT/SEGMENTS" + System.lineSeparator() + "## MISMATCHED SEGMENTS ARE: "
-                    + mismatchAreas.toString() + System.lineSeparator() + "## FINAL RESULT : VALIDATION FAILED...."
+                    + " SEGMENT/SEGMENTS" + System.lineSeparator() + "## MISMATCHED SEGMENTS [ [reg,seg],...] ARE: "
+                    + mismatchAreas.toString() + System.lineSeparator()
+                    + "## SECRET IMAGES MATHCHING RESULT : MATCHING FAILED....!"
                     + System.lineSeparator());
+        } else {
+            resultString.append("## SECRET IMAGES MATHCHING RESULT : MATCHING SUCCESSFUL....!");
         }
 
-        //System.out.println(resultString.toString());
-        File file = new File(string + "/secret-image-comparision-analysis.txt");
+        // System.out.println(resultString.toString());
+        File file = new File(analysisResultPath);
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -298,6 +311,8 @@ public class ImageComparision {
 
             e.printStackTrace();
         }
+
+        return success;
 
     }
 }

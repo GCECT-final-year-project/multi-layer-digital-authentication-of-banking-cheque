@@ -98,8 +98,7 @@ public class TextOnImage {
     
         HashMap<String, HashMap<String, HashMap<String, Integer>>> sectionCoordinates = getSectionCoordinates(
             sectionCoordinatesText);
-            System.out.println("READING TEXT FROM IMAGE");
-            System.out.println(Arrays.asList(sectionCoordinates));
+            //System.out.println(Arrays.asList(sectionCoordinates));
             try {
                 ImgOperation.readTextFromImage(stegoCover, sectionCoordinates, chequeDataPath);
             } catch (IOException e) {
@@ -107,7 +106,7 @@ public class TextOnImage {
                 e.printStackTrace();
             }
 
-        System.out.println("READING TEXT FROM IMAGE DONE...");
+        //System.out.println("READING TEXT FROM IMAGE DONE...");
         
     
     }

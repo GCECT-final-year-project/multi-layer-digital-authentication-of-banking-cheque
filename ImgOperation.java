@@ -412,7 +412,7 @@ public class ImgOperation {
         chequeData.get("cheque").substring(6, 15   )+" "+
         chequeData.get("cheque").substring(15, 21  )+" "+
         chequeData.get("cheque").substring(21, 23  );
-        System.out.println("extracted text data : "+System.lineSeparator()+ chequeDataText);
+        System.out.println("# extracted text data : "+System.lineSeparator()+ chequeDataText);
 
 
          //passing file instance in filewriter
@@ -507,7 +507,7 @@ public class ImgOperation {
             }
         }
         // Saving the modified image
-        System.out.println("signatyre extracted successfully..." + hideCount + " times...");
+        System.out.println("# signatyre extracted successfully..." + hideCount + " times...");
         //System.out.println(c);
         //System.out.println(Arrays.toString(sumArr));
 

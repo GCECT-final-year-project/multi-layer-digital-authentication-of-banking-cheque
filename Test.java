@@ -22,7 +22,8 @@ public class Test {
 
         //System.out.println("compare by pixelgrabber : ");
         //compareImageByPixelGrabber(fileA, fileB);
-
+System.out.println(Character.toString((char)10003));
+System.out.println(String.format("%.3f", 16.667523654362d));
     }
 
   
