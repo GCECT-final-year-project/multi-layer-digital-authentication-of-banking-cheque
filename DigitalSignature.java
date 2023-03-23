@@ -39,7 +39,7 @@ public class DigitalSignature {
             try (FileInputStream in = new FileInputStream(signPath+"/hashed-cheque-data.txt");
             FileOutputStream out = new FileOutputStream(signPath+"/digital-sign.txt")) {
             processFile(cipher, in, out);
-            System.out.println("signature generated....");
+            System.out.println("# signature generated successfully....");
         }
         } catch (Exception e) {
             // TODO: handle exception

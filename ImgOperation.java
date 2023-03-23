@@ -367,7 +367,7 @@ public class ImgOperation {
         // Saving the modified image
         File file = new File(outputPath);
         ImageIO.write(img, "png", file);
-        System.out.println("Embedding signature in Image done... " + c + " times...");
+        System.out.println("# signature embedded in the image " + c + " times...");
 
     }
 

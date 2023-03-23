@@ -15,13 +15,13 @@ public class TextOnImage {
 
         HashMap<String, String> chequeData = getChequeDataFromText(chequeDataText);
 
-        System.out.println("WRITING TEXT ON IMAGE");
-        System.out.println(Arrays.asList(sectionCoordinates));
-        System.out.println(Arrays.asList(chequeData));
+        
+        //System.out.println(Arrays.asList(sectionCoordinates));
+        System.out.println("# Cheque Data : "+Arrays.asList(chequeData));
 
         ImgOperation.writeTextOnImage(coverImg, sectionCoordinates, chequeData, coverOutImg);
 
-        System.out.println("WRITING TEXT ON IMAGE DONE...");
+       
     }
 
     private static HashMap<String, String> getChequeDataFromText(Path chequeDataText) {

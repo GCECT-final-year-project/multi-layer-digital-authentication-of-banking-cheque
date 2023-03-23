@@ -17,7 +17,7 @@ public class TDS {
 
         // SECRET IMAGE
         ConsoleOutput.printSeparator(50);
-        System.out.println("FIGERPRINT IMAGE");
+        System.out.println("## FIGERPRINT IMAGE");
         BufferedImage bufferedSecretImg = null;
         try {
             bufferedSecretImg = ImageIO.read(fPrint);
@@ -26,16 +26,16 @@ public class TDS {
         }
         int widthSecret = bufferedSecretImg.getWidth();
         int heightSecret = bufferedSecretImg.getHeight();
-        System.out.println("width: " + widthSecret + ", height: " + heightSecret);
+        System.out.println("# Width: " + widthSecret + ", Height: " + heightSecret);
         // getting the array of individual bits of the secret image
         // [y-pos][x-pos][3(rgb)][8(8 bit color)]
         boolean[][][][] bitArrSecretImg = ImgOperation.getBitArrayFromImage(bufferedSecretImg);
-        System.out.println(bitArrSecretImg.length * bitArrSecretImg[0].length * 3 + " bytes");
+        System.out.println("# Total size : "+ bitArrSecretImg.length * bitArrSecretImg[0].length * 3 + " bytes");
 
         // segmenting the secret image
         HashMap<String, HashMap<String, HashMap<String, Integer>>> segmentsScrtImg = ImgOperation
                 .generateFragmentCoordinates(bufferedSecretImg);
-        System.out.println(Arrays.asList(segmentsScrtImg));
+        //System.out.println(Arrays.asList(segmentsScrtImg));
         ConsoleOutput.printSeparator(50);
 
         // COVER IAMGE
@@ -49,17 +49,18 @@ public class TDS {
         int widthCover = bufferedCoverImage.getWidth();
         int heightCover = bufferedCoverImage.getHeight();
 
-        System.out.println("COVER IMAGE");
-        System.out.println("width: " + widthCover + ", height: " + heightCover);
+        System.out.println("## COVER IMAGE");
+        System.out.println("# Width: " + widthCover + ", Height: " + heightCover);
+        System.out.println("# Total size : "+ widthCover * heightCover * 3 + " bytes");
         HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> coverCoordinates = ImgOperation
                 .getCoordinatesFromCoverImg(new int[] { 0, 0, widthCover - 1, heightCover - 1 });
-        System.out.println(Arrays.asList(coverCoordinates));
+        //System.out.println(Arrays.asList(coverCoordinates));
         Integer[][][] colorArrCover = ImgOperation.getColorArrayFromImage(bufferedCoverImage);
         // System.out.println(colorArrCover.length+" , "+colorArrCover[0].length);
 
         ConsoleOutput.printSeparator(50);
 
-        System.out.println("TRANSFORM DOMAIN STEGANOGRAPHY");
+        System.out.println("## PERFORMING TRANSFORM DOMAIN STEGANOGRAPHY...");
         // PERFORMING STEGANOGRAPHY
         // colorArrCover <-- bitArrSecretImg
 
@@ -89,8 +90,8 @@ public class TDS {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        System.out.println("Image Steganography Done...");
-        ConsoleOutput.printSeparator(50);
+        System.out.println("# secret images are hidden successfully...");
+        //ConsoleOutput.printSeparator(50);
 
     }
 
