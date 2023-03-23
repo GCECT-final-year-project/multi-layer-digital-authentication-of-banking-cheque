@@ -143,7 +143,7 @@ public class DigitalSignature {
                 generateHash(inputPath, outputPath);
 
                 int res = matchFiles(digSignPath);
-                
+
                 if (res == -1) {
                     verificationResult += "VERIFICATION SUCCESSFUL...!";
                     isMatching=true;
@@ -152,16 +152,25 @@ public class DigitalSignature {
                     verificationResult += "VERIFICATION FAILED...!";
                     isMatching=false;
                 }
-                System.out.println(verificationResult);
+                
 
-                Files.write(Paths.get(digSignPath+"/verification/verification-result.txt"),
-                        verificationResult.getBytes());
+               
 
             }
 
         } catch (Exception e) {
             // TODO: handle exception
             System.out.println(e);
+            verificationResult += "VERIFICATION FAILED...!";
+            isMatching=false;
+        }
+        System.out.println(verificationResult);
+         try {
+            Files.write(Paths.get(digSignPath+"/verification/verification-result.txt"),
+                            verificationResult.getBytes());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
         return isMatching;
     }
