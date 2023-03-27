@@ -2,12 +2,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.Scanner;
 
 public class ClientApp{
     static int matrixInterval = 1;
     static int secretImgSize = 56;
     static int startingFragIndex=2;
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         ConsoleOutput.printSeparator(100);
         // cover image file
         File coverImg = new File("client-assets/cover-img/hdfc.png");
@@ -23,7 +25,7 @@ public class ClientApp{
         System.out.println("## WRITING TEXT ON IMAGE...");
         TextOnImage.writeChequeDataOnCover(coverImg, sectionCoordinatesText, chequeDataText,coverOutImg);
         ConsoleOutput.printSeparator(100);
-
+        sc.nextLine();
 
         // // fingerprint file
         int size=ClientApp.secretImgSize;
@@ -38,12 +40,14 @@ public class ClientApp{
         TDS.hideSecretImage(coverOutImg, tPrint, stegoCover);
 
         ConsoleOutput.printSeparator(100);
+        sc.nextLine();
 
         System.out.println("## GENERATING DIGITAL SIGNATURE FORM CHEQUE DATA...");
 
         DigitalSignature.generateSignature("client-assets/dig-sign", "client-assets/input-text/cheque-data.txt");
         
         ConsoleOutput.printSeparator(100);
+        sc.nextLine();
 
         System.out.println("## EMBEDDING DIGITAL SIGNATURE IN CHEQUE COVER IMAGE...");
         
@@ -54,6 +58,7 @@ public class ClientApp{
         }
 
         ConsoleOutput.printSeparator(100);
+        sc.nextLine();
 
         System.out.println("## SENDING DATA TO SERVER...");
         try {
