@@ -12,7 +12,7 @@ public class BankServerApp {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        //sc.nextLine();
         ConsoleOutput.printSeparator(100);
         // Stego iamge
         File stegoCover = new File("server-assets/stego-cover/sign-embedded-stego-cover.png");
@@ -24,7 +24,7 @@ public class BankServerApp {
         //READING TEXT FROM IMAGE USING OCR
         System.out.println("## READING TEXT FROM IMAGE USING OCR...");
         TextOnImage.readTextDataFromCover(stegoCover, sectionCoordinatesText, chedueDataPath);
-        sc.nextLine();
+        //sc.nextLine();
         ConsoleOutput.printSeparator(100);
 
         //EXTRACTING DIGITAL SIGNATURE FROM IMAGE
@@ -36,13 +36,13 @@ public class BankServerApp {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        sc.nextLine();
+        //sc.nextLine();
         ConsoleOutput.printSeparator(100);
 
         //VERIFYING DIGITAL SIGNATURE
         System.out.println("## VERIFYING DIGITAL SIGNATURE...");
         boolean digSignVerificationResult = DigitalSignature.verifySignature("server-assets/dig-sign", chedueDataPath);
-        sc.nextLine();
+        //sc.nextLine();
         ConsoleOutput.printSeparator(100);
 
         // EXTRACTING SECRET IMAGE FROM STEGO COVER IMAGE
@@ -54,7 +54,7 @@ public class BankServerApp {
         // extracting the fingerprint from the stego image file using transform domain
         // steganography
         TDS.extractSecretImage(stegoCover, size, extractionPath);
-        sc.nextLine();
+        //sc.nextLine();
         ConsoleOutput.printSeparator(100);
         System.out.println("## COMPARING EXTRACTED SECRET IMAGES... ");
         // fingerprint image matching new double[4][4][2];
@@ -65,7 +65,7 @@ public class BankServerApp {
         boolean comparisionResult = ImageComparision.analyzeMatchResult(fingerprintMatchResult, "server-assets/image-comparision/secret-images-comparision-analysis.txt");
         System.out.println("# all secret images matched successfully ? : " + comparisionResult);
 
-        sc.nextLine();
+        //sc.nextLine();
         ConsoleOutput.printSeparator(100);
         boolean finalResult = comparisionResult && digSignVerificationResult;
         System.out.println("## CHEQUE VALIDATION FINAL RESULT ##");

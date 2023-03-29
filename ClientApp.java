@@ -10,7 +10,7 @@ public class ClientApp{
     static int startingFragIndex=2;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        //sc.nextLine();
         ConsoleOutput.printSeparator(100);
         // cover image file
         File coverImg = new File("client-assets/cover-img/hdfc.png");
@@ -25,7 +25,7 @@ public class ClientApp{
 
         System.out.println("## WRITING TEXT ON IMAGE...");
         TextOnImage.writeChequeDataOnCover(coverImg, sectionCoordinatesText, chequeDataText,coverOutImg);
-        sc.nextLine();
+        //sc.nextLine();
         ConsoleOutput.printSeparator(100);
         
         
@@ -41,14 +41,14 @@ public class ClientApp{
         System.out.println("## HIDING SECRET IMAGE IN CHEQUE COVER IMAGE...");
         //hiding the fingerprint file as a secret inside the cover image file using transform domain steganography
         TDS.hideSecretImage(coverOutImg, tPrint, stegoCover);
-        sc.nextLine();
+        //sc.nextLine();
 
         ConsoleOutput.printSeparator(100);
         
         System.out.println("## GENERATING DIGITAL SIGNATURE FORM CHEQUE DATA...");
 
         DigitalSignature.generateSignature("client-assets/dig-sign", "client-assets/input-text/cheque-data.txt");
-        sc.nextLine();
+        //sc.nextLine();
         ConsoleOutput.printSeparator(100);
         
 
@@ -59,7 +59,7 @@ public class ClientApp{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sc.nextLine();
+        //sc.nextLine();
         ConsoleOutput.printSeparator(100);
         
 
