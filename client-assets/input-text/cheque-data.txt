@@ -1,4 +1,4 @@
-name-Sathi Roy
+name-Somnath Bera
 amount-10000
-date-20032023
+date-30032023
 cheque-123456 123456789 123456 12
