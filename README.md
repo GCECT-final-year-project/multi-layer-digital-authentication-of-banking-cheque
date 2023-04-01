@@ -19,3 +19,6 @@ step 6 : for ruuning client side application, execute the Client.java file
 step 7: for running the server side application, execute the BankServerApp.java file
 
 step 8 : All the outputs will be printed in the terminal output window
+
+
+

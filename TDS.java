@@ -8,11 +8,39 @@ import java.awt.Color;
 import javax.imageio.ImageIO;
 
 // Transform Domain Steganography
-
+/**
+ * 
+ * This class contains methods for performing the Transform Domain Steganography
+ * (TDS) algorithm for hiding and extracting
+ * 
+ * secret images in cover images. The algorithm uses the Discrete Cosine
+ * Transform (DCT) and the Forward Transformations
+ * 
+ * formulas to hide and extract the secret image bits in the cover image pixels.
+ * The class also contains methods for
+ * 
+ * formatting colors, hiding bits in colors, and performing the TDS extraction
+ * and hiding operations.
+ * 
+ * @author [Your Name]
+ * @version 1.0
+ */
 public class TDS {
 
     // Taking cover image and the image file that will be hidden and after hiding
     // storing the stego image
+    /**
+     * 
+     * Performs the TDS hiding operation to hide the secret image in the cover
+     * image. The method takes in the cover image
+     * file, the secret image file, and the stego cover image file where the hidden
+     * secret image will be stored.
+     * 
+     * @param coverImage the cover image file
+     * @param fPrint     the secret image file
+     * @param stegoCover the stego cover image file where the hidden secret image
+     *                   will be stored
+     */
     public static void hideSecretImage(File coverImage, File fPrint, File stegoCover) {
 
         // SECRET IMAGE
@@ -30,12 +58,12 @@ public class TDS {
         // getting the array of individual bits of the secret image
         // [y-pos][x-pos][3(rgb)][8(8 bit color)]
         boolean[][][][] bitArrSecretImg = ImgOperation.getBitArrayFromImage(bufferedSecretImg);
-        System.out.println("# Total size : "+ bitArrSecretImg.length * bitArrSecretImg[0].length * 3 + " bytes");
+        System.out.println("# Total size : " + bitArrSecretImg.length * bitArrSecretImg[0].length * 3 + " bytes");
 
         // segmenting the secret image
         HashMap<String, HashMap<String, HashMap<String, Integer>>> segmentsScrtImg = ImgOperation
                 .generateFragmentCoordinates(bufferedSecretImg);
-        //System.out.println(Arrays.asList(segmentsScrtImg));
+        // System.out.println(Arrays.asList(segmentsScrtImg));
         ConsoleOutput.printSeparator(50);
 
         // COVER IAMGE
@@ -51,10 +79,10 @@ public class TDS {
 
         System.out.println("## COVER IMAGE");
         System.out.println("# Width: " + widthCover + ", Height: " + heightCover);
-        System.out.println("# Total size : "+ widthCover * heightCover * 3 + " bytes");
+        System.out.println("# Total size : " + widthCover * heightCover * 3 + " bytes");
         HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> coverCoordinates = ImgOperation
                 .getCoordinatesFromCoverImg(new int[] { 0, 0, widthCover - 1, heightCover - 1 });
-        //System.out.println(Arrays.asList(coverCoordinates));
+        // System.out.println(Arrays.asList(coverCoordinates));
         Integer[][][] colorArrCover = ImgOperation.getColorArrayFromImage(bufferedCoverImage);
         // System.out.println(colorArrCover.length+" , "+colorArrCover[0].length);
 
@@ -66,9 +94,9 @@ public class TDS {
 
         for (int reg = 1; reg <= 4; reg++) {
             for (int seg = 1; seg <= 4; seg++) {
-                //System.out.println("region : " + reg + ", seg:" + seg);
+                // System.out.println("region : " + reg + ", seg:" + seg);
                 ArrayList<Integer[][]> pixelArr = getPixelArrayFromSegment(colorArrCover, coverCoordinates, reg, seg);
-                //System.out.println(pixelArr.size());
+                // System.out.println(pixelArr.size());
 
                 int startingFragIndex = ClientApp.startingFragIndex;
                 int matrixInterval = ClientApp.matrixInterval;
@@ -91,9 +119,12 @@ public class TDS {
             e.printStackTrace();
         }
         System.out.println("# secret images are hidden successfully...");
-        //ConsoleOutput.printSeparator(50);
+        // ConsoleOutput.printSeparator(50);
 
     }
+
+
+    
 
     private static void updateColorArrayFromPixelArray(ArrayList<Integer[][]> pixelArr, Integer[][][] colorArrCover,
             HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> coverCoordinates, int reg,
@@ -153,6 +184,19 @@ public class TDS {
         }
     }
 
+    /**
+
+Performs the TDS hiding operation to hide the secret image bits in the cover image pixels. The method takes in the
+pixel array of the cover image, the bit array of the secret image, the segment coordinates of the secret image, the
+starting fragment index, and the matrix interval. The method uses the Forward Transformations formulas to hide the
+secret image bits in the cover image pixels.
+@param pixelArr the pixel array of the cover image
+@param bitArrSecretImg the bit array of the secret image
+@param segmentsScrtImg the segment coordinates of the secret image
+@param startingFragIndex the starting fragment index
+@param matrixInterval the matrix interval
+*/
+
     private static void hideBitArrInPixelArr(ArrayList<Integer[][]> pixelArr, boolean[][][][] bitArrSecretImg,
             HashMap<String, HashMap<String, HashMap<String, Integer>>> segmentsScrtImg, int startingFragIndex,
             int matrixInterval) {
@@ -200,6 +244,17 @@ public class TDS {
      * 
      */
 
+     /**
+
+Performs the TDS operation to transform the cover image pixels to bit matrices using the Forward Transformations
+formulas. The method takes in the bit matrix array, the pixel array of the cover image, the starting fragment index,
+and the matrix interval. The method uses the Forward Transformations formulas to transform the cover image pixels to
+bit matrices.
+@param bitMatrixArr the bit matrix array
+@param pixelArr the pixel array of the cover image
+@param startingFragIndex the starting fragment index
+@param matrixInterval the matrix interval
+*/
     private static void performTDS(int[][][] bitMatrixArr, ArrayList<Integer[][]> pixelArr, int startingFragIndex,
             int matrixInterval) {
         int curPixel = 0;
@@ -262,7 +317,12 @@ public class TDS {
             curPixel += matrixInterval;
         }
     }
+/**
 
+Formats the color value to ensure it is within the range of 0 to 255.
+@param color the color value to format
+@return the formatted color value
+*/
     private static int formatColor(Integer color) {
         if (color < 0) {
             color = 0;
@@ -271,7 +331,14 @@ public class TDS {
         }
         return color;
     }
+/**
 
+Hides the bit in the color value. If the bit is 1, the color value is incremented by 1. If the bit is 0, the color
+value is decremented by 1.
+@param bit the bit to hide
+@param r the color value to hide the bit in
+@return the new color value with the hidden bit
+*/
     private static int hideBitInColor(int bit, int r) {
         if (bit == 1) {
             r += 1;
@@ -352,8 +419,19 @@ public class TDS {
         return pixelArr;
     }
 
-    
-
+    /**
+     * 
+     * Performs the TDS extraction operation to extract the hidden secret image from
+     * the stego cover image. The method
+     * takes in the stego cover image file, the size of the secret image, and the
+     * extraction path where the extracted
+     * secret images will be stored.
+     * 
+     * @param stegoCover     the stego cover image file
+     * @param size           the size of the secret image
+     * @param extractionPath the path where the extracted secret images will be
+     *                       stored
+     */
     public static void extractSecretImage(File stegoCover, int size, String extractionPath) {
 
         // SECRET IMAGE
@@ -365,12 +443,12 @@ public class TDS {
                 BufferedImage.TYPE_INT_RGB);
 
         boolean[][][][] bitArrSecretImg = new boolean[size][size][3][8];
-        System.out.println("# Total size : "+bitArrSecretImg.length * bitArrSecretImg[0].length * 3 + " bytes");
+        System.out.println("# Total size : " + bitArrSecretImg.length * bitArrSecretImg[0].length * 3 + " bytes");
 
         // segmenting the secret image
         HashMap<String, HashMap<String, HashMap<String, Integer>>> segmentsScrtImg = ImgOperation
                 .generateFragmentCoordinates(bufferedSecretImg);
-        //System.out.println(Arrays.asList(segmentsScrtImg));
+        // System.out.println(Arrays.asList(segmentsScrtImg));
         ConsoleOutput.printSeparator(50);
 
         // COVER IAMGE
@@ -388,8 +466,8 @@ public class TDS {
         System.out.println("# Width: " + widthCover + ", Height: " + heightCover);
         HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> coverCoordinates = ImgOperation
                 .getCoordinatesFromCoverImg(new int[] { 0, 0, widthCover - 1, heightCover - 1 });
-        System.out.println("# Total size : "+widthCover * widthCover * 3 + " bytes");
-        //System.out.println(Arrays.asList(coverCoordinates));
+        System.out.println("# Total size : " + widthCover * widthCover * 3 + " bytes");
+        // System.out.println(Arrays.asList(coverCoordinates));
         Integer[][][] colorArrCover = ImgOperation.getColorArrayFromImage(bufferedCoverImage);
         // System.out.println(colorArrCover.length+" , "+colorArrCover[0].length);
 
@@ -401,9 +479,9 @@ public class TDS {
 
         for (int reg = 1; reg <= 4; reg++) {
             for (int seg = 1; seg <= 4; seg++) {
-                //System.out.println("region : " + reg + ", seg:" + seg);
+                // System.out.println("region : " + reg + ", seg:" + seg);
                 ArrayList<Integer[][]> pixelArr = getPixelArrayFromSegment(colorArrCover, coverCoordinates, reg, seg);
-                //System.out.println(pixelArr.size());
+                // System.out.println(pixelArr.size());
 
                 int startingFragIndex = BankServerApp.startingFragIndex;
                 int matrixInterval = BankServerApp.matrixInterval;
@@ -415,7 +493,7 @@ public class TDS {
 
                 try {
                     ImageIO.write(bufferedSecretImg, "png",
-                            new File(extractionPath+"/secret-reg-" + reg + "-seg-" + seg + ".png"));
+                            new File(extractionPath + "/secret-reg-" + reg + "-seg-" + seg + ".png"));
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
