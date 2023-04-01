@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
-public class ImageComparision {
+public class ImageComparison {
     public static void main(String[] args) {
         // Reading file from local directory by
         // creating object of File class

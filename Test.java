@@ -15,10 +15,10 @@ public class Test {
         File fileA = new File("server-assets/extracted-fPrints/secret-reg-1-seg-1.png");
         File fileB = new File("server-assets/extracted-fPrints/secret-reg-4-seg-2.png");
 
-        System.out.println("Color comparison : "+ImageComparision.compareByColorDifference(fileA, fileB)+"%");
+        System.out.println("Color comparison : "+ImageComparison.compareByColorDifference(fileA, fileB)+"%");
         //System.out.println("Both images are extactly same ? " + strictlyCompareImage(fileA, fileB));
 
-        System.out.println("Data buffer objects comparision : " + ImageComparision.compareImageByDataBufferObjects(fileA, fileB) + "%");
+        System.out.println("Data buffer objects comparision : " + ImageComparison.compareImageByDataBufferObjects(fileA, fileB) + "%");
 
         //System.out.println("compare by pixelgrabber : ");
         //compareImageByPixelGrabber(fileA, fileB);
