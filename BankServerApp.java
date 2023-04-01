@@ -89,10 +89,10 @@ public class BankServerApp {
         System.out.println("## COMPARING EXTRACTED SECRET IMAGES... ");
         // fingerprint image matching new double[4][4][2];
 
-        double[][][] fingerprintMatchResult = ImageComparision.matchSecretImages(extractionPath,
+        double[][][] fingerprintMatchResult = ImageComparison.matchSecretImages(extractionPath,
                 "server-assets/secret-images/thumb-" + size + "x" + size + ".png");
 
-        boolean comparisionResult = ImageComparision.analyzeMatchResult(fingerprintMatchResult,
+        boolean comparisionResult = ImageComparison.analyzeMatchResult(fingerprintMatchResult,
                 "server-assets/image-comparision/secret-images-comparision-analysis.txt");
         System.out.println("# all secret images matched successfully ? : " + comparisionResult);
 
