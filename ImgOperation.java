@@ -7,8 +7,27 @@ import java.util.Map;
 import java.awt.Graphics;
 import java.awt.font.TextAttribute;
 
+/**
+ * 
+ * This class contains methods for image operations such as writing text on
+ * image, text from image, embedding in image, and extracting signature from
+ * image.
+ */
 public class ImgOperation {
 
+    /**
+     * 
+     * a 3D integer array representing the RGB color values of each in the given
+     * BufferedImage.
+     * The first dimension represents the y-coordinate of the pixel, the second
+     * dimension represents the x-coordinate of the pixel,
+     * and the third dimension represents the color channel (0 for red, 1 for green,
+     * 2 for blue).
+     * 
+     * @param bufferedImage the input BufferedImage
+     * @return a 3D integer array representing the RGB color values of each pixel in
+     *         the given BufferedImage
+     */
     // getting color array from image -> [y][x][0/1/2] -> r/g/b
     public static Integer[][][] getColorArrayFromImage(BufferedImage bufferedImage) {
         int width = bufferedImage.getWidth();
@@ -38,6 +57,21 @@ public class ImgOperation {
 
     }
 
+    /**
+     * 
+     * Returns a 4D boolean array representing the binary values of each color
+     * channel of each pixel in the given BufferedImage.
+     * The first dimension represents the y-coordinate of the pixel, the second
+     * dimension represents the x-coordinate of the pixel,
+     * the third dimension represents the color channel (0 for red, 1 for green, 2
+     * for blue), and the fourth dimension represents the bit position (0 for MSB, 7
+     * for LSB).
+     * 
+     * @param bufferedImage the input BufferedImage
+     * @return a 4D boolean array representing the binary values of each color
+     *         channel of each pixel in the given BufferedImage
+     */
+
     public static boolean[][][][] getBitArrayFromImage(BufferedImage bufferedImage) {
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
@@ -64,6 +98,15 @@ public class ImgOperation {
         return bitArray;
     }
 
+    /**
+     * 
+     * Returns a boolean array representing the binary value of the given color.
+     * The array has a length of 8, with the first element representing the MSB and
+     * the last element representing the LSB.
+     * 
+     * @param color the input color
+     * @return a boolean array representing the binary value of the given color
+     */
     public static boolean[] getBitArrayFromColor(int color) {
         boolean[] bitArray = new boolean[8];
         String colorString = Integer.toBinaryString(color);
@@ -76,6 +119,20 @@ public class ImgOperation {
 
         return bitArray;
     }
+
+    /**
+     * 
+     * a BufferedImage object created from the given 3D integer array representing
+     * RGB color values of each pixel in the image.
+     * The first dimension represents the y-coordinate of the pixel, the second
+     * dimension represents the x-coordinate of the pixel,
+     * and the third dimension represents the color channel (0 for red, 1 for green,
+     * 2 for blue).
+     * 
+     * @param colorArray the input 3D integer array representing the RGB color
+     *                   values of each pixel in the image
+     * @return a BufferedImage object created from the given 3D integer array
+     */
 
     public static BufferedImage getImageFromColorArray(Integer[][][] colorArray) {
 
@@ -107,6 +164,20 @@ public class ImgOperation {
         return bufferedImage;
     }
 
+    /**
+     * 
+     * Returns a BufferedImage object created from the given 4D boolean array
+     * representing binary values of each color channel of each pixel in the image.
+     * The first dimension represents the y-coordinate of the pixel, the second
+     * dimension represents the x-coordinate of the pixel,
+     * the third dimension represents the color channel (0 for red, 1 for green, 2
+     * for blue), and the fourth dimension represents the bit position (0 for MSB, 7
+     * for LSB).
+     *
+     * @param bitArray the input 4D boolean array representing the binary values of
+     *                 each color channel of each pixel in the image
+     * @return a BufferedImage object created from the given 4D boolean array
+     */
     public static BufferedImage getBufferedImageFromBitArray(boolean[][][][] bitArray) {
         int width = bitArray.length;
         int height = bitArray[0].length;
@@ -132,6 +203,17 @@ public class ImgOperation {
         return bufferedImage;
     }
 
+    /**
+     * 
+     * Returns an integer color value from the given boolean array representing the
+     * binary value of a color channel.
+     * The array has a length of 8, with the first element representing the MSB and
+     * the last element representing the LSB.
+     *
+     * @param bitArray the input boolean array representing the binary value of a
+     *                 color channel
+     * @return an integer color value
+     */
     private static int getColorFromBitArray(boolean[] bitArray) {
 
         int color = 0;
@@ -144,6 +226,19 @@ public class ImgOperation {
         return color;
     }
 
+    /**
+     * 
+     * Returns a HashMap containing the coordinates of different regions and
+     * segments of the image.
+     * The first key represents the region number, the second key represents the
+     * segment number, and the third key represents the start or end coordinate (x
+     * or y).
+     *
+     * @param imgCoordinates an integer array containing the coordinates of the
+     *                       image (x1, y1, x2, y2)
+     * @return a HashMap containing the coordinates of different regions and
+     *         segments of the image
+     */
     // getiing all regions
     public static HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> getCoordinatesFromCoverImg(
             int[] imgCoordinates) {
@@ -164,6 +259,18 @@ public class ImgOperation {
         return regions;
     }
 
+    /**
+     * 
+     * Returns a HashMap containing the coordinates of different regions and
+     * segments of the image * The first key represents the region number, the
+     * second key represents the segment number, and the third key represents the
+     * start or end coordinate (x or y).
+     *
+     * @param regionCoordinates an integer array containing the coordinates of the
+     *                          region (x1, y1, x2, y2)
+     * @return a HashMap containing the coordinates of different segments of the
+     *         region
+     */
     // getting all segments
     private static HashMap<String, HashMap<String, HashMap<String, Integer>>> getRegionCoordinates(
             int[] regionCoordinates) {
@@ -184,6 +291,14 @@ public class ImgOperation {
         return region;
     }
 
+    /**
+     * 
+     * Returns a HashMap containing the start and end coordinates of a segment.
+     *
+     * @param segmentCoordinates an integer array containing the coordinates of the
+     *                           segment (x1, y1, x2, y2)
+     * @return a HashMap containing the start and end coordinates of the segment
+     */
     // getting start and end coordinates
     private static HashMap<String, HashMap<String, Integer>> getSegmentCoordinates(int[] segmentCoordinates) {
 
@@ -208,6 +323,19 @@ public class ImgOperation {
         return segment;
     }
 
+    /**
+     * 
+     * Returns a HashMap containing the coordinates of different fragments of the
+     * image.
+     * The first key represents the fragment number, the second key represents the
+     * start or end coordinate (x or y), and the third key represents the x or y
+     * coordinate value.
+     *
+     * @param bufferedImage the input image
+     * @return a HashMap containing the coordinates of different fragments of the
+     *         image
+     */
+
     // getting the fragment coordinates of an image
     // fragment no -> start/end -> x/y coordinates
     public static HashMap<String, HashMap<String, HashMap<String, Integer>>> generateFragmentCoordinates(
@@ -225,6 +353,15 @@ public class ImgOperation {
 
         return fragCoordinates;
     }
+
+    /**
+     * 
+     * Returns a HashMap containing the start and end coordinates of a fragment.
+     *
+     * @param fragCord an integer array containing the coordinates of the fragment
+     *                 (x1, y1, x2, y2)
+     * @return a HashMap containing the start and end coordinates of the fragment
+     */
 
     private static HashMap<String, HashMap<String, Integer>> getFragmentCoordinates(int[] fragCord) {
         HashMap<String, HashMap<String, Integer>> fragment = new HashMap<String, HashMap<String, Integer>>();
@@ -247,6 +384,19 @@ public class ImgOperation {
 
         return fragment;
     }
+
+    /**
+     * 
+     * Writes text on the given image at the specified coordinates and saves the
+     * output image to the given file path.
+     * 
+     * @param coverImg           the input image file
+     * @param sectionCoordinates a HashMap containing the coordinates of different
+     *                           sections of the image
+     * @param chequeData         a HashMap containing the data to be written on the
+     *                           image
+     * @param coverOutImg        the output image file path
+     */
 
     public static void writeTextOnImage(File coverImg,
             HashMap<String, HashMap<String, HashMap<String, Integer>>> sectionCoordinates,
@@ -289,6 +439,16 @@ public class ImgOperation {
 
     }
 
+    /**
+     * 
+     * Embeds the given signature file in the given cover image and saves the output
+     * image to the specified file path.
+     * 
+     * @param signPath       the path of the signature file to be embedded
+     * @param coverImagePath the path of the cover image file
+     * @param outputPath     the output file path for the embedded image
+     * @throws IOException if an I/O error occurs while reading or writing the files
+     */
     public static void embedSignatureInImage(String signPath, String coverImagePath, String outputPath)
             throws IOException {
 
@@ -312,6 +472,24 @@ public class ImgOperation {
 
         embed(arr, new File(coverImagePath), outputPath);
     }
+
+    /**
+     * 
+     * Embeds the given signature bytes in the given cover image and saves the image
+     * to the specified file. The method reads the cover image file and the
+     * signature bytes, and then embeds the signature bytes in the cover image by
+     * modifying the RGB values of the pixels in a specific region of the image. The
+     * method uses the getCoordinatesFromCoverImg method to get the coordinates of
+     * the region in which the signature is to be embedded. The method then iterates
+     * over the pixels in the region and modifies the RGB values of the pixels to
+     * embed the signature bytes. The method saves the modified image to the
+     * specified output file path.
+     * 
+     * @param signBytes  a byte array containing the signature bytes to be embedded
+     * @param image      the cover image file
+     * @param outputPath the output file path for the embedded image
+     * @throws IOException if an I/O error occurs while reading or writing the files
+     */
 
     // embedding sign file bytes
     public static void embed(byte[] signBytes, File image, String outputPath) throws IOException {
@@ -348,7 +526,7 @@ public class ImgOperation {
                 int red = color.getRed();
                 int green = color.getGreen();
                 int blue = color.getBlue();
-               
+
                 red = signBytes[cur++] + 128;
                 // green = signBytes[cur++] + 128;
                 blue = signBytes[cur++] + 128;
@@ -371,8 +549,21 @@ public class ImgOperation {
 
     }
 
+    /**
+     * 
+     * Reads text from the given image at the specified coordinates and saves the
+     * extracted data to a text file.
+     * 
+     * @param stegoCover         the input image file
+     * @param sectionCoordinates a HashMap containing the coordinates of different
+     *                           sections of the image
+     * @param chequeDataPath     the output file path for the extracted data
+     * @throws IOException if an I/O error occurs while reading or writing the files
+     */
+
     public static void readTextFromImage(File stegoCover,
-            HashMap<String, HashMap<String, HashMap<String, Integer>>> sectionCoordinates, String chequeDataPath) throws IOException {
+            HashMap<String, HashMap<String, HashMap<String, Integer>>> sectionCoordinates, String chequeDataPath)
+            throws IOException {
         HashMap<String, String> chequeData = new HashMap<String, String>();
         BufferedImage bufferedCoverImg = null;
         try {
@@ -386,53 +577,64 @@ public class ImgOperation {
             int xe = sectionCoordinates.get(key).get("end").get("x") + 5;
             int ye = sectionCoordinates.get(key).get("end").get("y") + 5;
             if (key.equals("date") || key.equals("name")) {
-                //xs -=   10;
-                ys -=  5;
-            } 
+                // xs -= 10;
+                ys -= 5;
+            }
 
             BufferedImage subImg = bufferedCoverImg.getSubimage(xs, ys, xe - xs, ye - ys);
 
             try {
-                ImageIO.write(subImg, "png", new File(chequeDataPath+"/" + key + ".png"));
+                ImageIO.write(subImg, "png", new File(chequeDataPath + "/" + key + ".png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            String extractedText = OCR.performOCR(new File(chequeDataPath+"/" + key + ".png")).trim();
+            String extractedText = OCR.performOCR(new File(chequeDataPath + "/" + key + ".png")).trim();
 
             chequeData.put(key, extractedText);
-            //System.out.println(key + " : " + extractedText);
+            // System.out.println(key + " : " + extractedText);
 
         }
-        String chequeDataText ="";
-        chequeDataText+="name-"+chequeData.get("name")+System.lineSeparator()+
-        "amount-"+chequeData.get("amount")+System.lineSeparator()+
-        "date-"+chequeData.get("date")+System.lineSeparator()+
-        "cheque-"+chequeData.get("cheque").substring(0, 6)+" "+
-        chequeData.get("cheque").substring(6, 15   )+" "+
-        chequeData.get("cheque").substring(15, 21  )+" "+
-        chequeData.get("cheque").substring(21, 23  );
-        System.out.println("# extracted text data : "+System.lineSeparator()+ chequeDataText);
+        String chequeDataText = "";
+        chequeDataText += "name-" + chequeData.get("name") + System.lineSeparator() +
+                "amount-" + chequeData.get("amount") + System.lineSeparator() +
+                "date-" + chequeData.get("date") + System.lineSeparator() +
+                "cheque-" + chequeData.get("cheque").substring(0, 6) + " " +
+                chequeData.get("cheque").substring(6, 15) + " " +
+                chequeData.get("cheque").substring(15, 21) + " " +
+                chequeData.get("cheque").substring(21, 23);
+        System.out.println("# extracted text data : " + System.lineSeparator() + chequeDataText);
 
+        // passing file instance in filewriter
+        FileWriter wr = new FileWriter(new File(chequeDataPath + "/extracted-cheque-data.txt"));
 
-         //passing file instance in filewriter
-         FileWriter wr = new FileWriter(new File(chequeDataPath+"/extracted-cheque-data.txt"));
- 
-         //calling writer.write() method with the string
-         wr.write(chequeDataText);
-          
-         //flushing the writer
-         wr.flush();
-          
-         //closing the writer
-         wr.close();
+        // calling writer.write() method with the string
+        wr.write(chequeDataText);
+
+        // flushing the writer
+        wr.flush();
+
+        // closing the writer
+        wr.close();
     }
 
-    public static void extractSignatureFromImage(String coverPath, String extractionPath, int hideCount) throws IOException {
+    /**
+     * 
+     * Extracts the signature from the given cover image and saves it to the
+     * specified file path.
+     * 
+     * @param coverPath      the path of the cover image file
+     * @param extractionPath the output file path for the extracted signature
+     * @param hideCount      the number of times the signature is hidden in the
+     *                       image
+     * @throws IOException if an I/O error occurs while reading or writing the files
+     */
+    public static void extractSignatureFromImage(String coverPath, String extractionPath, int hideCount)
+            throws IOException {
         byte[] signBytes = extract(new File(coverPath), hideCount);
         // System.out.println(Arrays.toString(extract(new
         // File("SignEmbedding/embedded-cover.png"))));
-        //System.out.println(Arrays.toString(signBytes));
+        // System.out.println(Arrays.toString(signBytes));
 
         File file = new File(extractionPath);
         OutputStream os = new FileOutputStream(file);
@@ -443,12 +645,20 @@ public class ImgOperation {
         os.close();
     }
 
+    /**
+     * 
+     * Extracts the embedded signature bytes from the given image file.
+     * 
+     * @param image     the input image file
+     * @param hideCount the number of times the signature is hidden in the image
+     * @return a byte array containing the extracted signature bytes
+     * @throws IOException if an I/O error occurs while reading the file
+     */
     public static byte[] extract(File image, int hideCount) throws IOException {
         BufferedImage img = ImageIO.read(image);
         int width = img.getWidth();
         int height = img.getHeight();
 
-       
         // storing the image coordinates for getting the segmented coordinates
         int[] imgCoordinates = { 0, 0, width - 1, height - 1 };
 
@@ -465,14 +675,12 @@ public class ImgOperation {
 
         byte[] signBytes = new byte[256];
 
-        
         int c = hideCount;
         int[] sumArr = new int[256];
 
         boolean extracted = false;
         int cur = 0;
 
-      
         int xOffset = 30;
         int yOffset = 20;
 
@@ -497,7 +705,7 @@ public class ImgOperation {
 
                 if (cur == 256) {
                     // extracted = true;
-                    
+
                     c--;
                     cur = 0;
                     if (c == 0) {
@@ -508,8 +716,8 @@ public class ImgOperation {
         }
         // Saving the modified image
         System.out.println("# signatyre extracted successfully..." + hideCount + " times...");
-        //System.out.println(c);
-        //System.out.println(Arrays.toString(sumArr));
+        // System.out.println(c);
+        // System.out.println(Arrays.toString(sumArr));
 
         for (int i = 0; i < signBytes.length; i++) {
 
@@ -519,7 +727,5 @@ public class ImgOperation {
         return signBytes;
 
     }
-
-    
 
 }

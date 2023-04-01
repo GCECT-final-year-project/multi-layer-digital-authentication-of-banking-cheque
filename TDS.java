@@ -123,8 +123,21 @@ public class TDS {
 
     }
 
-
-    
+    /**
+     * 
+     * Updates the color array of the cover image from the pixel array of secret
+     * image. The method takes in the pixel array of the secret image, the color
+     * array of the cover image, the coordinates of the cover image segments, the
+     * region index, and the segment index. The method uses the Reverse
+     * Transformations formulas to update the color array of the cover image from
+     * the pixel array of the secret image.
+     * 
+     * @param pixelArr         the pixel array of the secret image
+     * @param colorArrCover    the color array of the cover image
+     * @param coverCoordinates the coordinates of the cover image segments
+     * @param reg              the region index
+     * @param seg              the segment index
+     */
 
     private static void updateColorArrayFromPixelArray(ArrayList<Integer[][]> pixelArr, Integer[][][] colorArrCover,
             HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> coverCoordinates, int reg,
@@ -185,17 +198,21 @@ public class TDS {
     }
 
     /**
-
-Performs the TDS hiding operation to hide the secret image bits in the cover image pixels. The method takes in the
-pixel array of the cover image, the bit array of the secret image, the segment coordinates of the secret image, the
-starting fragment index, and the matrix interval. The method uses the Forward Transformations formulas to hide the
-secret image bits in the cover image pixels.
-@param pixelArr the pixel array of the cover image
-@param bitArrSecretImg the bit array of the secret image
-@param segmentsScrtImg the segment coordinates of the secret image
-@param startingFragIndex the starting fragment index
-@param matrixInterval the matrix interval
-*/
+     * 
+     * Performs the TDS hiding operation to hide the secret image bits in the cover
+     * image pixels. The method takes in the
+     * pixel array of the cover image, the bit array of the secret image, the
+     * segment coordinates of the secret image, the
+     * starting fragment index, and the matrix interval. The method uses the Forward
+     * Transformations formulas to hide the
+     * secret image bits in the cover image pixels.
+     * 
+     * @param pixelArr          the pixel array of the cover image
+     * @param bitArrSecretImg   the bit array of the secret image
+     * @param segmentsScrtImg   the segment coordinates of the secret image
+     * @param startingFragIndex the starting fragment index
+     * @param matrixInterval    the matrix interval
+     */
 
     private static void hideBitArrInPixelArr(ArrayList<Integer[][]> pixelArr, boolean[][][][] bitArrSecretImg,
             HashMap<String, HashMap<String, HashMap<String, Integer>>> segmentsScrtImg, int startingFragIndex,
@@ -244,17 +261,21 @@ secret image bits in the cover image pixels.
      * 
      */
 
-     /**
-
-Performs the TDS operation to transform the cover image pixels to bit matrices using the Forward Transformations
-formulas. The method takes in the bit matrix array, the pixel array of the cover image, the starting fragment index,
-and the matrix interval. The method uses the Forward Transformations formulas to transform the cover image pixels to
-bit matrices.
-@param bitMatrixArr the bit matrix array
-@param pixelArr the pixel array of the cover image
-@param startingFragIndex the starting fragment index
-@param matrixInterval the matrix interval
-*/
+    /**
+     * 
+     * Performs the TDS operation to transform the cover image pixels to bit
+     * matrices using the Forward Transformations
+     * formulas. The method takes in the bit matrix array, the pixel array of the
+     * cover image, the starting fragment index,
+     * and the matrix interval. The method uses the Forward Transformations formulas
+     * to transform the cover image pixels to
+     * bit matrices.
+     * 
+     * @param bitMatrixArr      the bit matrix array
+     * @param pixelArr          the pixel array of the cover image
+     * @param startingFragIndex the starting fragment index
+     * @param matrixInterval    the matrix interval
+     */
     private static void performTDS(int[][][] bitMatrixArr, ArrayList<Integer[][]> pixelArr, int startingFragIndex,
             int matrixInterval) {
         int curPixel = 0;
@@ -317,12 +338,14 @@ bit matrices.
             curPixel += matrixInterval;
         }
     }
-/**
 
-Formats the color value to ensure it is within the range of 0 to 255.
-@param color the color value to format
-@return the formatted color value
-*/
+    /**
+     * 
+     * Formats the color value to ensure it is within the range of 0 to 255.
+     * 
+     * @param color the color value to format
+     * @return the formatted color value
+     */
     private static int formatColor(Integer color) {
         if (color < 0) {
             color = 0;
@@ -331,14 +354,17 @@ Formats the color value to ensure it is within the range of 0 to 255.
         }
         return color;
     }
-/**
 
-Hides the bit in the color value. If the bit is 1, the color value is incremented by 1. If the bit is 0, the color
-value is decremented by 1.
-@param bit the bit to hide
-@param r the color value to hide the bit in
-@return the new color value with the hidden bit
-*/
+    /**
+     * 
+     * Hides the bit in the color value. If the bit is 1, the color value is
+     * incremented by 1. If the bit is 0, the color
+     * value is decremented by 1.
+     * 
+     * @param bit the bit to hide
+     * @param r   the color value to hide the bit in
+     * @return the new color value with the hidden bit
+     */
     private static int hideBitInColor(int bit, int r) {
         if (bit == 1) {
             r += 1;
@@ -348,6 +374,15 @@ value is decremented by 1.
         return r;
     }
 
+    /**
+     * 
+     * Calculates the average of the bounds of a given value and a multiple of a
+     * interval.
+     * 
+     * @param A1  the value to calculate the average of the bounds for
+     * @param val the interval to use for calculating the bounds
+     * @return the average of the bounds of A1 and a multiple of val
+     */
     private static int getAvgOfBounds(int A1, int val) {
         int left = (A1 / val) * val;
         int right = (A1 / val + 1) * val;
@@ -355,6 +390,25 @@ value is decremented by 1.
         return (left + right) / 2;
     }
 
+    /**
+     * 
+     * Retrieves the pixel array from a segment of the cover image color array based
+     * the given segment coordinates.
+     * The method takes in the color array of the cover image, the coordinates of
+     * the cover image segments, the region index,
+     * and the segment index. The method uses the Reverse Transformations formulas
+     * to retrieve the pixel array from the
+     * cover image color array. The pixel array is returned as an ArrayList of
+     * Integer 2D arrays, where each 2D array
+     * represents a 2x2 pixel block in the cover image segment.
+     * 
+     * @param colorArrCover    the color array of the cover image
+     * @param coverCoordinates the coordinates of the cover image segments
+     * @param reg              the region index
+     * @param seg              the segment index
+     * @return an ArrayList of Integer 2D arrays representing the pixel array of the
+     *         cover image segment
+     */
     private static ArrayList<Integer[][]> getPixelArrayFromSegment(Integer[][][] colorArrCover,
             HashMap<String, HashMap<String, HashMap<String, HashMap<String, Integer>>>> coverCoordinates, int reg,
             int seg) {
@@ -505,6 +559,23 @@ value is decremented by 1.
 
     }
 
+    /**
+     * 
+     * Extracts the bit array of the secret image from the pixel array of cover
+     * image. The method takes in the pixel array of the cover image, the bit array
+     * of the secret image, the segment coordinates of the secret image, the
+     * starting fragment index, and the matrix interval. The method uses the Reverse
+     * Transformations formulas to extract the bit array of the secret image from
+     * the cover image pixels. The extracted bit array is stored in the provided
+     * bitArrSecretImg parameter.
+     * 
+     * @param pixelArr          the pixel array of the cover image
+     * @param bitArrSecretImg   the bit array of the secret image
+     * @param segmentsScrtImg   the segment coordinates of the secret image
+     * @param startingFragIndex the starting fragment index
+     * @param matrixInterval    the matrix interval
+     */
+
     private static void extractBitArrFromPixelArray(ArrayList<Integer[][]> pixelArr, boolean[][][][] bitArrSecretImg,
             HashMap<String, HashMap<String, HashMap<String, Integer>>> segmentsScrtImg, int startingFragIndex,
             int matrixInterval) {
@@ -535,6 +606,26 @@ value is decremented by 1.
         }
 
     }
+
+    /**
+     * 
+     * Performs the TDS extraction operation to extract the hidden secret image from
+     * the stego cover image. The method takes in the pixel array of the cover
+     * image,
+     * the bit array of the secret image, the segment coordinates of the secret
+     * image,
+     * the starting fragment index, and the matrix interval. The method uses the
+     * Reverse
+     * Transformations formulas to extract the bit array of the secret image from
+     * the cover image pixels. The extracted bit array is stored in the provided
+     * bitArrSecretImg parameter.
+     * 
+     * @param pixelArr          the pixel array of the cover image
+     * @param bitArrSecretImg   the bit array of the secret image
+     * @param segmentsScrtImg   the segment coordinates of the secret image
+     * @param startingFragIndex the starting fragment index
+     * @param matrixInterval    the matrix interval
+     */
 
     private static void performTDSExtraction(int[][][] bitMatrixArr, ArrayList<Integer[][]> pixelArr,
             int startingFragIndex, int matrixInterval) {
