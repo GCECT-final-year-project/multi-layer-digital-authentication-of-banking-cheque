@@ -11,6 +11,19 @@ import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * class provides methods to compare two images and analyze the matching result.
+ * It includes methods to compare by color difference, data buffer objects, and
+ * pixel grabber.
+ * It also includes a method strictly compare two images.
+ * The class also provides a method to match secret images with a given image
+ * and return the matching result.
+ * 
+ * @author [Author Name]
+ * @version [Version Number]
+ */
+
 public class ImageComparison {
     public static void main(String[] args) {
         // Reading file from local directory by
@@ -29,6 +42,21 @@ public class ImageComparison {
 
     }
 
+    /**
+     * 
+     * This method matches secret images with a given image and returns the matching
+     * result.
+     * It takes the path of the directory containing the secret images and the path
+     * of the given image as input.
+     * It returns a 3D array containing the matching result for each segment of each
+     * region of the secret images.
+     * 
+     * @param extractionPath The path of the directory containing the secret images
+     * @param secretImgPath  The path of the given image
+     * @return A 3D array containing the matching result for each segment of each
+     *         region of the secret images
+     */
+
     public static double[][][] matchSecretImages(String extractionPath, String secretImgPath) {
 
         double[][][] matchResult = new double[4][4][2];
@@ -45,6 +73,16 @@ public class ImageComparison {
         return matchResult;
     }
 
+    /**
+     * 
+     * This method compares two images by comparing their data buffer objects.
+     * It takes two image files as input and returns the percentage of similarity
+     * between them.
+     * 
+     * @param fileA The first image file to be compared
+     * @param fileB The second image file to be compared
+     * @return The percentage of similarity between the two images
+     */
     public static double compareImageByDataBufferObjects(File fileA, File fileB) {
 
         double percentage = 0;
@@ -78,6 +116,19 @@ public class ImageComparison {
         return percentage;
     }
 
+    /**
+     * 
+     * This method strictly compares two images by comparing their data buffer
+     * objects.
+     * It takes two image files as input and returns a boolean value indicating
+     * whether the images are exactly the same or not.
+     * 
+     * @param fileA The first image file to be compared
+     * @param fileB The second image file to be compared
+     * @return A boolean value indicating whether the images are exactly the same or
+     *         not
+     */
+
     public static boolean strictlyCompareImage(File fileA, File fileB) {
         try {
             // take buffer data from botm image files //
@@ -104,6 +155,17 @@ public class ImageComparison {
         }
     }
 
+    /**
+     * 
+     * This method compares two images by calculating the color difference between
+     * them.
+     * It takes two image files as input and returns the percentage of similarity
+     * between them.
+     * 
+     * @param fileA The first image file to be compared
+     * @param fileB The second image file to be compared
+     * @return The percentage of similarity between the two images
+     */
     public static double compareByColorDifference(File fileA, File fileB) {
         // Initially assigning null
         BufferedImage imgA = null;
@@ -189,6 +251,16 @@ public class ImageComparison {
         return 0d;
     }
 
+    /**
+     * 
+     * This method compares two images by using the pixel grabber technique.
+     * It takes two image files as input and returns the percentage of similarity
+     * between them.
+     * 
+     * @param fileA The first image file to be compared
+     * @param fileB The second image file to be compared
+     * @return The percentage of similarity between the two images
+     */
     static double compareImageByPixelGrabber(File fileA, File fileB) {
 
         // Load the images
@@ -241,6 +313,20 @@ public class ImageComparison {
         return percentage;
     }
 
+    /**
+     * 
+     * This method analyzes the matching result of secret images with a given image
+     * and writes the result to a file.
+     * It takes the matching result as input and the path of the file to write the
+     * result to.
+     * It returns a boolean value indicating whether the matching was successful or
+     * not.
+     * 
+     * @param fingerprintMatchResult The matching result of secret images with a
+     *                               given image
+     * @param analysisResultPath     The path of the file to write the result to
+     * @return A boolean value indicating whether the matching was successful or not
+     */
     public static boolean analyzeMatchResult(double[][][] fingerprintMatchResult, String analysisResultPath) {
         StringBuffer resultString = new StringBuffer("## SECRET IMAGE COMPARISION RESULT:" + System.lineSeparator());
         String cross = "!";
