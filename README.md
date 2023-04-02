@@ -4,7 +4,7 @@ cheque validation with the help of image steganography (transform domain) and di
 Introduction:
         The Cheque System Project is a-based application that allows users to generate and validate cheques with added security features. The system uses transform domain steganography to hide a secret image inside the cheque cover image, and digital signatures to verify the authenticity of the cheque data. The project consists of two main components: the client-side application and the server-side application.
 
- Client-Side Application:
+# Client-Side Application:
         The client-side application is responsible for generating the cheque and sending it to the server for validation. The main method of the ClientApp class executes the entire client-side process, which includes the following steps:
 
         * Reading the cover image file and cheque data text file.
@@ -20,7 +20,7 @@ Introduction:
         * Sending the required files to the server using the TransferData class.
 
 
- Server-Side Application:
+# Server-Side Application:
         The server-side application is responsible for validating the cheque and comparing the extracted secret image with the original secret image. The main method of the BankServerApp class executes the server-side process, which includes the following steps:
 
         * The server application starts by reading the stego cover image and the coordinates of the sections on the cheque where text was written.
@@ -40,11 +40,11 @@ Introduction:
 
 
 
- Files:
+## Files:
         The project includes several files that are used by the client-side and server-side applications. 
         The following is a list of the main files:
 
- ClientApp.java
+# ClientApp.java
         This file is the main class of the client-side application. It contains the main method that executes the entire process of cheque validation and security. The file imports several other classes and methods from other Java files in the project. The main method performs the following tasks:
         * Reads the cover image file and cheque data text file.
         * Writes the cheque data on the cover image using the TextOnImage class.
@@ -53,7 +53,7 @@ Introduction:
         * Embeds the digital signature in the cover image using the ImgOperation class.
         * Sends the data to the server using the TransferData class.
 
- BankServerApp.java
+# BankServerApp.java
         This file is the main class of the server-side application. It contains the main method that executes the entire process of cheque validation and security. The file imports several other classes and methods from other Java files in the project. The main method performs the following tasks:
         * Reads the stego image file, cheque data text file, and digital signature file.
         * Reads the text data from the cover image using the TextOnImage class.
@@ -63,14 +63,14 @@ Introduction:
         * Compares the extracted secret images with the original secret image using the ImageComparison class.
         * Displaying the validation result on the console.
 
- DigitalSignature.java
+# DigitalSignature.java
         This file contains methods for generating and verifying digital signatures for cheque data. The file imports several other classes and methods from other Java files in the project. The file contains the following methods:
         * generateHash(): This method generates a hash value for the input data using the SHA-256 algorithm.
         * processFile(): This method processes the input file using the Cipher class and writes the output to the output file.
         * generateSignature(): This method generates a digital signature for the input data using the private key and writes the output to a file.
         * verifySignature(): This method verifies the digital signature for the input data using the public key and returns a boolean value indicating whether the signature is valid or not.
 
- GenerateKeyPair.java
+# GenerateKeyPair.java
         This file contains a main method that generates a pair of public and private keys using the RSA algorithm. The keys are saved to separate files in the client-assets/keys directory.
 
 # ImgOperation.java
