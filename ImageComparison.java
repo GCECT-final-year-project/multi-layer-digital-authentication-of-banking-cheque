@@ -344,7 +344,7 @@ public class ImageComparison {
                 boolean result = false;
                 String resSign;
 
-                if (fingerprintMatchResult[i][j][0] < 99.90 || fingerprintMatchResult[i][j][1] < 96.90) {
+                if (fingerprintMatchResult[i][j][0] < 99.90 || fingerprintMatchResult[i][j][1] < 92.90) {
                     result = false;
                     mismatchAreas.add(new ArrayList<>(Arrays.asList(i + 1, j + 1)));
                     resSign = cross;

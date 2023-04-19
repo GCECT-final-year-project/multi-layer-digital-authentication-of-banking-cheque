@@ -302,6 +302,13 @@ public class TDS {
             A[1][0] = (a[1][0] + a[1][1]) / 2;
             A[1][1] = a[1][1];
 
+            // modified equations
+            // A[0][0] = (3*a[0][0] + a[0][1]) / 4;
+            // A[0][1] = a[0][1];
+            // A[1][0] = (3*a[1][0] + a[1][1]) / 4;
+            // A[1][1] = a[1][1];
+
+            
             for (int i = 0; i < 2; i++) {
                 for (int j = 0; j < 2; j++) {
                     A[i][j] = getAvgOfBounds(A[i][j], 4);
@@ -320,6 +327,12 @@ public class TDS {
             // reverse transform
             R[0][0] = 2 * R[0][0] - R[0][1];
             R[1][0] = 2 * R[1][0] - R[1][1];
+
+            // modified equations
+            // R[0][0] = (4 * R[0][0] - R[0][1])/3;
+            // R[1][0] = (4 * R[1][0] - R[1][1])/3;
+
+
             // formating color for out of bounds
 
             for (int i = 0; i < 2; i++) {

@@ -106,6 +106,9 @@ public class BankServerApp {
         ConsoleOutput.printSeparator(50);
         System.out.println("# CHEQUE VALIDATION SUCCESSFUL ? : " + finalResult);
         ConsoleOutput.printSeparator(100);
+
+        
+        
     }
 
 }

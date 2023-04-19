@@ -2,6 +2,7 @@
 cheque validation with the help of image steganography (transform domain) and digital sinature (RSA+SHA-256)
 
 Introduction:
+
         The Cheque System Project is a-based application that allows users to generate and validate cheques with added security features. The system uses transform domain steganography to hide a secret image inside the cheque cover image, and digital signatures to verify the authenticity of the cheque data. The project consists of two main components: the client-side application and the server-side application.
 
 # Client-Side Application:
@@ -118,6 +119,7 @@ Introduction:
 
 
 Conclusion:
+
         The Multi-Layer Cheque Authentication System is a secure and efficient way to generate and validate cheques. The project uses advanced techniques such as transform domain steganography and digital signatures to ensure the authenticity and integrity of the cheque data. The project can be further improved by adding more security features and optimizing the code for better performance.
 
 

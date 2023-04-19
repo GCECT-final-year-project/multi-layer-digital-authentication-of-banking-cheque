@@ -8,6 +8,8 @@ import java.io.*;
 public class OCR {
     public static void main(String[] args) throws Exception {
         System.out.println("Hello, World!");
+        File image = new File("server-assets/cheque-data/date.png");
+        System.out.println(performOCR(image));
     }
    
     public static String performOCR(File image){
