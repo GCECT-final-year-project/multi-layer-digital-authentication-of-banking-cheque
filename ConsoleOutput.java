@@ -2,6 +2,7 @@
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Scanner;
 
 /**
  * 
@@ -21,6 +22,12 @@ public class ConsoleOutput {
      */
     public static void printSeparator(int length) {
         System.out.println("#".repeat(length) + " " + getCurrentTime());
+    }
+
+    public static void pressEnter(){
+        System.out.print("\nPress Enter to continue...");
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
     }
 
     /**

@@ -27,8 +27,7 @@ public class ClientApp {
      */
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        sc.nextLine();
+        ConsoleOutput.pressEnter();
         ConsoleOutput.printSeparator(100);
         // cover image file
         File coverImg = new File("client-assets/cover-img/hdfc.png");
@@ -43,7 +42,7 @@ public class ClientApp {
 
         System.out.println("## WRITING TEXT ON IMAGE...");
         TextOnImage.writeChequeDataOnCover(coverImg, sectionCoordinatesText, chequeDataText, coverOutImg);
-        sc.nextLine();
+        ConsoleOutput.pressEnter();
         ConsoleOutput.printSeparator(100);
 
         // // fingerprint file
@@ -57,14 +56,14 @@ public class ClientApp {
         // hiding the fingerprint file as a secret inside the cover image file using
         // transform domain steganography
         TDS.hideSecretImage(coverOutImg, tPrint, stegoCover);
-        sc.nextLine();
+        ConsoleOutput.pressEnter();
 
         ConsoleOutput.printSeparator(100);
 
         System.out.println("## GENERATING DIGITAL SIGNATURE FORM CHEQUE DATA...");
 
         DigitalSignature.generateSignature("client-assets/dig-sign", "client-assets/input-text/cheque-data.txt");
-        sc.nextLine();
+        ConsoleOutput.pressEnter();
         ConsoleOutput.printSeparator(100);
 
         System.out.println("## EMBEDDING DIGITAL SIGNATURE IN CHEQUE COVER IMAGE...");
@@ -76,7 +75,7 @@ public class ClientApp {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        sc.nextLine();
+        ConsoleOutput.pressEnter();
         ConsoleOutput.printSeparator(100);
 
         System.out.println("## SENDING DATA TO SERVER...");
